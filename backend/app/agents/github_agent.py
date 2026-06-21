@@ -1,13 +1,20 @@
 from uagents import Agent, Context
 
 from app.agents.models import InvestigationResult, PatchRequest
-from app.agents.addresses import GITHUB_SEED, PATCH_AGENT_ADDRESS
+from app.agents.addresses import (
+    GITHUB_AGENT_ENDPOINT,
+    GITHUB_SEED,
+    LOCAL_AGENT_RESOLVER,
+    PATCH_AGENT_ADDRESS,
+)
+from app.agents.messaging import send_with_debug
 
 github_agent = Agent(
     name="github_agent",
     seed=GITHUB_SEED,
     port=8004,
-    endpoint="http://127.0.0.1:8004/submit",
+    endpoint=[GITHUB_AGENT_ENDPOINT],
+    resolve=LOCAL_AGENT_RESOLVER,
 )
 
 
@@ -26,7 +33,12 @@ async def fetch_repo_context(ctx: Context, sender: str, msg: InvestigationResult
 
     ctx.logger.info(f"Forwarding patch request to Patch agent for incident {msg.incident_id}")
 
-    await ctx.send(PATCH_AGENT_ADDRESS, patch_request)
+    await send_with_debug(
+        ctx,
+        sender_name="github_agent",
+        recipient=PATCH_AGENT_ADDRESS,
+        message=patch_request,
+    )
 
 
 if __name__ == "__main__":

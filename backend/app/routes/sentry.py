@@ -1,15 +1,21 @@
 import hashlib
 import hmac
 import json
+import logging
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Request
 from sqlmodel import Session
-from uagents.communication import send_sync_message
+from uagents.communication import send_message
+from uagents_core.types import DeliveryStatus, MsgStatus
 
 from app.config import settings
 from app.database import get_session
 from app.models.incident import Incident
 from app.agents.models import IncidentMessage
+from app.agents.addresses import LOCAL_AGENT_RESOLVER
+from app.services.sentry_event_parser import parse_sentry_event
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/sentry", tags=["sentry"])
 
@@ -41,33 +47,28 @@ async def sentry_webhook(
     except json.JSONDecodeError:
         raise HTTPException(status_code=400, detail="Invalid JSON payload")
 
-    data = payload.get("data", {})
-    event = data.get("event") or {}
-    issue = data.get("issue") or {}
+    try:
+        parsed = parse_sentry_event(payload)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
 
-    issue_id = event.get("issue_id") or issue.get("id")
-
-    if not issue_id:
-        raise HTTPException(status_code=400, detail="Missing Sentry issue id")
-
-    title = (
-        event.get("title")
-        or issue.get("title")
-        or event.get("message")
-        or "Unknown Sentry issue"
-    )
-
-    issue_url = event.get("web_url") or event.get("issue_url") or issue.get("permalink")
-    project = event.get("project") or payload.get("project")
-    triggered_rule = data.get("triggered_rule") or data.get("issue_alert", {}).get("title")
+    breakdown = parsed.summary()
+    recommendation_parts = []
+    if parsed.triggered_rule:
+        recommendation_parts.append(
+            f"Sentry alert received from rule: {parsed.triggered_rule}"
+        )
+    if breakdown:
+        recommendation_parts.append(f"Event breakdown: {breakdown}")
 
     incident = Incident(
-        sentry_issue_id=str(issue_id),
-        title=title,
-        issue_url=issue_url,
-        repo_full_name=str(project) if project is not None else None,
+        sentry_issue_id=parsed.issue_id,
+        title=parsed.title,
+        issue_url=parsed.permalink,
+        repo_full_name=settings.default_repo_full_name,
         status="received",
-        recommendation=f"Sentry alert received from rule: {triggered_rule}" if triggered_rule else None,
+        severity=parsed.level or "unknown",
+        recommendation="\n".join(recommendation_parts) or None,
     )
     
     session.add(incident)
@@ -77,7 +78,9 @@ async def sentry_webhook(
     if incident.id is None:
         raise HTTPException(status_code=500, detail="Incident was created without an id")
 
-    repo_full_name = incident.repo_full_name or settings.default_repo_full_name
+    repo_full_name = incident.repo_full_name
+    if not repo_full_name and parsed.sentry_project and "/" in parsed.sentry_project:
+        repo_full_name = parsed.sentry_project
 
     if not repo_full_name:
         raise HTTPException(
@@ -95,17 +98,51 @@ async def sentry_webhook(
         incident_id=incident.id,
         sentry_issue_id=incident.sentry_issue_id,
         title=incident.title,
-        culprit=None,
+        culprit=parsed.culprit,
         permalink=incident.issue_url,
         repo_full_name=repo_full_name,
         default_branch=settings.default_branch,
+        event_id=parsed.event_id,
+        level=parsed.level,
+        environment=parsed.environment,
+        platform=parsed.platform,
+        release=parsed.release,
+        transaction=parsed.transaction,
+        error_type=parsed.error_type,
+        error_value=parsed.error_value,
+        request_method=parsed.request_method,
+        request_url=parsed.request_url,
+        request_path=parsed.request_path,
+        status_code=parsed.status_code,
+        tags=parsed.tags,
+        stacktrace_frames=parsed.stacktrace_frames,
     )
 
     try:
-        await send_sync_message(
+        logger.info(
+            "Send started sender=fastapi_sentry_webhook recipient=%s "
+            "message_type=%s incident_id=%s",
+            settings.investigation_agent_address,
+            type(msg).__name__,
+            msg.incident_id,
+        )
+        status = await send_message(
             destination=settings.investigation_agent_address,
             message=msg,
+            resolver=LOCAL_AGENT_RESOLVER,
             timeout=30,
+        )
+        if isinstance(status, MsgStatus) and status.status != DeliveryStatus.DELIVERED:
+            raise RuntimeError(
+                f"Agent message delivery failed: {status.status} ({status.detail})"
+            )
+        logger.info(
+            "Send finished sender=fastapi_sentry_webhook recipient=%s "
+            "message_type=%s incident_id=%s result=%s",
+            settings.investigation_agent_address,
+            type(msg).__name__,
+            msg.incident_id,
+            status,
         )
 
         incident.status = "agent_workflow_started"
@@ -136,4 +173,18 @@ async def sentry_webhook(
         "resource": sentry_hook_resource,
         "sentry_issue_id": incident.sentry_issue_id,
         "title": incident.title,
+        "breakdown": {
+            "event_id": parsed.event_id,
+            "level": parsed.level,
+            "environment": parsed.environment,
+            "platform": parsed.platform,
+            "release": parsed.release,
+            "culprit": parsed.culprit,
+            "error_type": parsed.error_type,
+            "error_value": parsed.error_value,
+            "request_method": parsed.request_method,
+            "request_path": parsed.request_path,
+            "status_code": parsed.status_code,
+            "stacktrace_frame_count": len(parsed.stacktrace_frames),
+        },
     }

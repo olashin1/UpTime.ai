@@ -11,26 +11,39 @@ agents = [
 
 processes = []
 
-try:
-    for agent in agents:
-        print(f"Starting {agent}...")
-        p = subprocess.Popen([sys.executable, "-m", agent])
-        processes.append(p)
-        time.sleep(1)
 
-    print("All agents started.")
-
-    for p in processes:
-        p.wait()
-
-except KeyboardInterrupt:
-    print("Stopping agents...")
-
-    for p in processes:
-        p.terminate()
+def stop_agents():
+    for process in processes:
+        if process.poll() is None:
+            process.terminate()
 
     time.sleep(2)
 
+    for process in processes:
+        if process.poll() is None:
+            process.kill()
+
+
+try:
+    for agent in agents:
+        print(f"Starting {agent}...", flush=True)
+        p = subprocess.Popen([sys.executable, "-m", agent])
+        processes.append(p)
+        time.sleep(1)
+        if p.poll() is not None:
+            raise RuntimeError(f"{agent} exited during startup with code {p.returncode}")
+
+    print("All agents started.", flush=True)
+
     for p in processes:
-        if p.poll() is None:
-            p.kill()
+        return_code = p.wait()
+        if return_code != 0:
+            raise RuntimeError(f"Agent process exited with code {return_code}")
+
+except KeyboardInterrupt:
+    print("Stopping agents...", flush=True)
+    stop_agents()
+except Exception as exc:
+    print(f"Failed to run agents: {exc}", file=sys.stderr, flush=True)
+    stop_agents()
+    raise SystemExit(1) from exc

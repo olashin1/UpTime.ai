@@ -1,0 +1,74 @@
+Sentry-Hook-Resource: event_alert
+{
+  "action": "triggered",
+  "actor": {
+    "id": "sentry",
+    "name": "Sentry",
+    "type": "application"
+  },
+  "data": {
+    "event": {
+      "contexts": {
+        "runtime": {
+          "name": "CPython",
+          "type": "runtime",
+          "version": "3.13.5"
+        }
+      },
+      "culprit": "app.main.me",
+      "environment": "local",
+      "event_id": "f71b938f7a0f4e429aadf7479d9ba53d",
+      "extra": {
+        "app": "example-backend",
+        "environment": "local",
+        "event_type": "bogus_backend_request",
+        "method": "GET",
+        "path": "/me",
+        "route": "/me",
+        "status_code": 401
+      },
+      "fingerprint": [
+        "bogus-backend-request",
+        "GET",
+        "/me",
+        "401"
+      ],
+      "issue_id": "7565067445",
+      "level": "warning",
+      "logentry": {
+        "formatted": "Bogus backend request observed"
+      },
+      "message": "Bogus backend request observed",
+      "metadata": {
+        "title": "Bogus backend request observed"
+      },
+      "platform": "python",
+      "project": 123456789,
+      "release": "example-release",
+      "request": {
+        "headers": [
+          ["Accept", "*/*"],
+          ["User-Agent", "curl/8.7.1"]
+        ],
+        "method": "GET",
+        "url": "http://localhost:8000/me"
+      },
+      "tags": [
+        ["environment", "local"],
+        ["event_type", "bogus_backend_request"],
+        ["http.method", "GET"],
+        ["http.status_code", "401"],
+        ["level", "warning"],
+        ["route", "/me"]
+      ],
+      "title": "Bogus backend request observed",
+      "transaction": "app.main.me",
+      "type": "default",
+      "web_url": "https://sentry.example/issues/7565067445"
+    },
+    "triggered_rule": "Notify via AI On-Call Webhook"
+  },
+  "installation": {
+    "uuid": "00000000-0000-0000-0000-000000000000"
+  }
+}

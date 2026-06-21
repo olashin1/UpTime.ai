@@ -1,14 +1,21 @@
 from uagents import Agent, Context
 
 from app.agents.models import PatchRequest, PatchResult
-from app.agents.addresses import PATCH_SEED, VALIDATION_AGENT_ADDRESS
-from app.services.llm_service import generate_patch_plan
+from app.agents.addresses import (
+    LOCAL_AGENT_RESOLVER,
+    PATCH_AGENT_ENDPOINT,
+    PATCH_SEED,
+    VALIDATION_AGENT_ADDRESS,
+)
+from app.agents.messaging import send_with_debug
+from app.services.recommendation_service import build_final_recommendation
 
 patch_agent = Agent(
     name="patch_agent",
     seed=PATCH_SEED,
     port=8003,
-    endpoint="http://127.0.0.1:8003/submit",
+    endpoint=[PATCH_AGENT_ENDPOINT],
+    resolve=LOCAL_AGENT_RESOLVER,
 )
 
 
@@ -16,9 +23,10 @@ patch_agent = Agent(
 async def create_patch(ctx: Context, sender: str, msg: PatchRequest):
     ctx.logger.info(f"Creating patch plan for incident {msg.incident_id}")
 
-    patch_summary = generate_patch_plan(
-        root_cause=msg.suspected_root_cause,
+    patch_summary = build_final_recommendation(
+        suspected_root_cause=msg.suspected_root_cause,
         recommendation=msg.recommendation,
+        files_to_inspect=msg.files_to_inspect,
     )
 
     result = PatchResult(
@@ -34,7 +42,12 @@ async def create_patch(ctx: Context, sender: str, msg: PatchRequest):
         f"Forwarding patch result to Validation agent for incident {msg.incident_id}"
     )
 
-    await ctx.send(VALIDATION_AGENT_ADDRESS, result)
+    await send_with_debug(
+        ctx,
+        sender_name="patch_agent",
+        recipient=VALIDATION_AGENT_ADDRESS,
+        message=result,
+    )
 
 
 if __name__ == "__main__":

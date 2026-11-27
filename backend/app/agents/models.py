@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Dict, List, Optional
 
 from uagents import Model
 
@@ -30,6 +30,8 @@ class IncidentMessage(Model):
     event_type: Optional[str] = None
     stack_frames: List[str] = []
     stack_files: List[str] = []
+    tags: Dict[str, str] = {}
+    event_time: Optional[str] = None
     recent_incidents: List[RecentIncident] = []
 
 

@@ -74,6 +74,8 @@ async def sentry_webhook(
     context = _request_context_from_event(event)
     full_error = _full_error_from_event(event)
     stack_frames, stack_files = _stack_from_event(event)
+    tags = _tags_from_event(event)
+    event_time = event.get("datetime") or event.get("timestamp")
 
     trace_step(
         "webhook",
@@ -149,6 +151,8 @@ async def sentry_webhook(
         event_type=context["event_type"],
         stack_frames=stack_frames,
         stack_files=stack_files,
+        tags=tags,
+        event_time=str(event_time) if event_time is not None else None,
         recent_incidents=recent_incidents,
     )
 
@@ -274,6 +278,18 @@ def _full_error_from_event(event: dict) -> str | None:
     return "\n".join(unique_details) if unique_details else None
 
 
+IGNORED_TAGS = {"level", "environment", "url", "transaction", "server_name", "runtime", "release"}
+
+
+def _tags_from_event(event: dict) -> dict[str, str]:
+    """Sentry sends tags as [[key, value], ...] (or occasionally as a dict)."""
+    raw = event.get("tags") or []
+    pairs = raw.items() if isinstance(raw, dict) else (
+        (item[0], item[1]) for item in raw if isinstance(item, (list, tuple)) and len(item) == 2
+    )
+    return {str(key): str(value) for key, value in pairs if key not in IGNORED_TAGS}
+
+
 def _stack_from_event(event: dict, max_frames: int = 12) -> tuple[list[str], list[str]]:
     """In-app stack frames ("path:function:line", oldest first) and their unique files.
 
@@ -337,7 +353,7 @@ def _recent_incidents(
             sentry_issue_id=incident.sentry_issue_id,
             title=incident.title,
             status=incident.status,
-            severity=incident.severity,
+            severity=incident.agent_severity or incident.severity,
             issue_url=incident.issue_url,
             recommendation=incident.recommendation,
         )

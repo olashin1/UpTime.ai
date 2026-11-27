@@ -58,3 +58,24 @@ def test_budget_ledger_refuses_past_cap(tmp_path, monkeypatch):
     except severity_service.BudgetExceeded:
         return
     raise AssertionError("expected BudgetExceeded")
+
+
+def test_prompt_includes_tags_time_and_open_incident_status():
+    from app.agents.models import RecentIncident
+    from app.routes.sentry import _tags_from_event
+
+    tags = _tags_from_event({"tags": [["maintenance_window", "active"], ["level", "error"]]})
+    assert tags == {"maintenance_window": "active"}
+
+    msg = _msg(
+        tags=tags,
+        event_time="2026-11-27T22:10:00Z",
+        recent_incidents=[
+            RecentIncident(incident_id=2, sentry_issue_id="2", title="t", status="investigating",
+                           severity="high", recommendation="Acknowledged by on-call")
+        ],
+    )
+    prompt = severity_service.build_user_prompt(msg, None)
+    assert "maintenance_window=active" in prompt
+    assert "2026-11-27T22:10:00Z" in prompt
+    assert "status=investigating" in prompt and "Acknowledged by on-call" in prompt

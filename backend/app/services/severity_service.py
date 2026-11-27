@@ -106,9 +106,12 @@ escalate:
            significant user, revenue, data, or security harm.
   false  - it can wait for the normal ticket queue.
 
-Judge from the evidence you are given. When source code is provided, use it to check
-what the failing code actually does: whether errors are caught or retried, whether the
-path is behind a disabled flag or deprecated, and what the failure affects.
+Judge from the evidence you are given. Take into account the alert's time and tags
+and the recent incidents: an alert can describe something that has already recovered,
+that duplicates an incident someone is already working, or that is expected during
+planned work. When source code is provided, use it to check what the failing code
+actually does: whether errors are caught or retried, whether the path is behind a
+disabled flag or deprecated, and what the failure affects.
 
 Reply with JSON only: {"severity": "high|medium|low", "escalate": true|false,
 "reason": "<one sentence>"}"""
@@ -127,14 +130,19 @@ RESPONSE_SCHEMA = {
 def build_user_prompt(msg: IncidentMessage, repo_context: RepositoryContext | None) -> str:
     frames = "\n".join(f"  {frame}" for frame in msg.stack_frames) or "  (no stack frames)"
     recent = "\n".join(
-        f"  - {incident.title} [{incident.severity}]" for incident in msg.recent_incidents
+        f"  - {incident.title} [severity={incident.severity}, status={incident.status}]"
+        + (f" note: {incident.recommendation}" if incident.recommendation else "")
+        for incident in msg.recent_incidents
     ) or "  (none)"
+    tags = ", ".join(f"{key}={value}" for key, value in msg.tags.items()) or "(none)"
 
     parts = [
         "SENTRY ALERT",
         f"title: {msg.title}",
         f"level: {msg.level}",
         f"environment: {msg.environment or 'unknown'}",
+        f"event time: {msg.event_time or 'unknown'}",
+        f"tags: {tags}",
         f"culprit: {msg.culprit or 'unknown'}",
         f"request: {msg.http_method or '-'} {msg.route or '-'} status={msg.status_code}",
         f"details:\n{msg.full_error or '(none)'}",
@@ -186,18 +194,29 @@ def call_gemini(system_prompt: str, user_prompt: str) -> dict:
     if not settings.gemini_api_key:
         raise RuntimeError("GEMINI_API_KEY is not set")
 
-    _reserve_call()
+    from google.genai import errors
+
     client = genai.Client(api_key=settings.gemini_api_key)
-    response = client.models.generate_content(
-        model=settings.gemini_model,
-        contents=user_prompt,
-        config=types.GenerateContentConfig(
-            system_instruction=system_prompt,
-            temperature=0,
-            response_mime_type="application/json",
-            response_schema=RESPONSE_SCHEMA,
-        ),
+    config = types.GenerateContentConfig(
+        system_instruction=system_prompt,
+        temperature=0,
+        response_mime_type="application/json",
+        response_schema=RESPONSE_SCHEMA,
     )
+
+    # Retry rate limits and transient server errors; every attempt counts against the budget.
+    for delay in [10, 30, None]:
+        _reserve_call()
+        try:
+            response = client.models.generate_content(
+                model=settings.gemini_model, contents=user_prompt, config=config
+            )
+            break
+        except errors.APIError as exc:
+            if delay is None or exc.code not in {429, 500, 503}:
+                raise
+            time.sleep(delay)
+
     data = json.loads(response.text or "")
 
     severity = str(data.get("severity", "")).lower()

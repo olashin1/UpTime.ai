@@ -12,14 +12,14 @@
 
 ![Dashboard showing a real incident: high severity, page, with the model's reason and a patch recommendation](docs/dashboard.png)
 
-## 🌟 Highlights
+## Highlights
 
 - **Sentry webhook intake.** `POST /api/sentry/webhook` verifies the HMAC-SHA256 signature, parses the event (error, request context, in-app stack frames, tags, time), stores an incident, and hands it to the agents.
 - **Severity + escalation assessment.** Each incident gets a severity (`high` / `medium` / `low`), an escalate yes/no, and a one-line reason from Gemini (`gemini-3.5-flash-lite`). It can optionally read the stack-trace files from GitHub first. The original keyword rules remain as the fallback if the model is unavailable.
 - **Four Fetch.ai uAgents in a chain.** Investigation (assessment) → GitHub (loads source files) → Patch (drafts a fix) → Validation (checks the draft and stores it). They pass typed messages over local HTTP.
 - **Live dashboard.** React polls the API every 4 s and shows each incident's assessment, the reason, and the validated patch recommendation.
 
-## 📊 Evaluation
+## Evaluation
 
 48 hand-labeled Sentry alerts (`eval/eval_errors.json`), with labels committed before any run. They point into a small shop backend in `eval/fixture_repo/`, which the repo-context mode reads from GitHub. 9 cases deliberately split severity from escalation, such as an outage that has already recovered, or a certificate expiring on a Friday night. Full method, error analysis and caveats: [`LEARNING.md`](LEARNING.md). Raw results: [`eval/results/`](eval/results/).
 
@@ -35,11 +35,11 @@
 
 Gemini calls used for all of the above: 118 (counted in `eval/results/gemini_calls.log`).
 
-## 🚀 Usage
+## Usage
 
 Run the backend, the agents and the dashboard (below), then point a Sentry alert rule's webhook at `http://<host>:8010/api/sentry/webhook`. Each alert appears on the dashboard within a few seconds with its severity, the page/no-page decision and the reason. A patch recommendation follows in the right-hand column.
 
-## ⬇️ Installation
+## Installation
 
 ```bash
 # backend (Python 3.13 tested)
@@ -85,7 +85,7 @@ backend/.venv/Scripts/python eval/score.py                   # rebuild metrics f
 
 Paid runs (Gemini) and the end-to-end latency run are listed in [`LEARNING.md`](LEARNING.md#reproduce-every-number).
 
-## 🔌 API
+## API
 
 | Method | Path | What it does |
 |---|---|---|
@@ -96,7 +96,7 @@ Paid runs (Gemini) and the end-to-end latency run are listed in [`LEARNING.md`](
 | `DELETE` | `/api/recommendations/{id}` | Delete a recommendation |
 | `GET` | `/api/health/` | Liveness |
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Category | Technologies |
 | --- | --- |
@@ -107,7 +107,7 @@ Paid runs (Gemini) and the end-to-end latency run are listed in [`LEARNING.md`](
 | **Frontend** | React 19, TypeScript, Vite, Tailwind CSS |
 | **Eval** | Playwright (Chromium), labeled JSON test set |
 
-## 🏗️ Architecture
+## Architecture
 
 When Sentry posts an alert:
 1. The **webhook** verifies the signature, extracts the error, request context, in-app stack frames, tags and event time, saves an `Incident`, and sends it to the Investigation agent with the 5 most recent incidents.
@@ -118,7 +118,7 @@ When Sentry posts an alert:
 
 Each step appends a line to `backend/workflow_trace.log`.
 
-## ⚠️ Known limitations
+## Known limitations
 
 - **The eval is synthetic.** 48 alerts written for a fixture repo, labeled by one person. Use the numbers as evidence about behavior, not as production accuracy.
 - **Severity and urgency get mixed.** The model gets paging right on the 9 split cases (9/9 with context) but labels their severity wrong (1/9). It lowers severity for recovered outages and raises it for urgent-but-not-yet-harmful ones.
@@ -128,7 +128,7 @@ Each step appends a line to `backend/workflow_trace.log`.
 - **Patch drafts without an ASI:One key are a template**, and the workflow note still says "used the structured model recommendation". The draft's quality wasn't evaluated.
 - **SQLite only.** `database.py` uses SQLite `PRAGMA` statements; no auth on the API.
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 UpTime.ai/

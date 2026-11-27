@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.database import init_db
-from app.routes import health, patch_agent, sentry, incidents, github, recommendations
+from app.routes import health, sentry, incidents, recommendations
 import sentry_sdk
 
 if settings.sentry_dsn:
@@ -37,7 +37,5 @@ app.add_middleware(
 
 app.include_router(health.router)
 app.include_router(sentry.router)
-app.include_router(patch_agent.router)
 app.include_router(incidents.router)
-app.include_router(github.router)
 app.include_router(recommendations.router)

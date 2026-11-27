@@ -11,19 +11,16 @@ load_dotenv(dotenv_path=ENV_PATH)
 
 
 class Settings(BaseSettings):
+    # SQLite only: database.py runs SQLite PRAGMA statements for its lightweight migration.
     database_url: str = "sqlite:///./app.db"
-    redis_url: str = "redis://localhost:6379"
 
-    fetch_ai_agent_url: str = "http://localhost:8001"
-
-    sentry_auth_token: str | None = None
-    sentry_org_slug: str | None = None
-    sentry_project_slug: str | None = None
+    # Sentry: DSN reports this backend's own errors; the secret verifies incoming webhooks.
     sentry_dsn: str | None = None
     sentry_webhook_secret: str | None = None
 
+    # Defaults to the address derived from the investigation agent's seed (see addresses.py).
     investigation_agent_address: str | None = None
-    
+
     default_repo_full_name: str | None = None
     default_branch: str = "main"
 

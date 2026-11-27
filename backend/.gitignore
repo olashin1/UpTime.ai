@@ -293,3 +293,4 @@ terraform.tfvars
 .aws/
 gcp-key.json
 azure-auth.json
+!.env.example

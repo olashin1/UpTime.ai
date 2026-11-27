@@ -11,7 +11,7 @@ from app.config import settings
 from app.database import get_session
 from app.models.incident import Incident
 from app.agents.models import IncidentMessage, RecentIncident
-from app.agents.addresses import LOCAL_AGENT_RESOLVER
+from app.agents.addresses import INVESTIGATION_AGENT_ADDRESS, LOCAL_AGENT_RESOLVER
 from app.agents.workflow_trace import trace_step
 
 router = APIRouter(prefix="/api/sentry", tags=["sentry"])
@@ -129,11 +129,7 @@ async def sentry_webhook(
             detail="Missing repo_full_name. Set DEFAULT_REPO_FULL_NAME in .env",
         )
 
-    if not settings.investigation_agent_address:
-        raise HTTPException(
-            status_code=500,
-            detail="Missing INVESTIGATION_AGENT_ADDRESS in .env",
-        )
+    investigation_address = settings.investigation_agent_address or INVESTIGATION_AGENT_ADDRESS
 
     msg = IncidentMessage(
         incident_id=incident.id,
@@ -163,10 +159,10 @@ async def sentry_webhook(
             incident.id,
             "forwarding incident to Investigation Agent",
             recent_incidents=len(recent_incidents),
-            destination=settings.investigation_agent_address,
+            destination=investigation_address,
         )
         delivery = await send_message(
-            destination=settings.investigation_agent_address,
+            destination=investigation_address,
             message=msg,
             resolver=LOCAL_AGENT_RESOLVER,
             timeout=30,

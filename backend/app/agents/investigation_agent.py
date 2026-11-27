@@ -76,7 +76,7 @@ async def investigate(ctx: Context, sender: str, msg: IncidentMessage):
     )
 
     actionable, reason = _is_actionable(msg)
-    files_to_inspect = _guess_files(msg)
+    files_to_inspect = list(dict.fromkeys([*msg.stack_files, *_guess_files(msg)]))[:5]
 
     result = InvestigationResult(
         incident_id=msg.incident_id,

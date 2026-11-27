@@ -1,0 +1,875 @@
+{
+  "mode": "llm",
+  "ref": "43b0a2d776307775ed5dce20cbb410bb22b2c0b4",
+  "repo": null,
+  "source_root": null,
+  "model": "gemini-3.5-flash-lite",
+  "gemini_calls": 48,
+  "fallbacks": 0,
+  "rows": [
+    {
+      "id": "E01",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "An unhandled AttributeError is causing 500 errors on the checkout flow, preventing users from placing orders.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1821
+    },
+    {
+      "id": "E02",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The core checkout and payment flow is failing with a 500 error due to the payment provider being unavailable.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1314
+    },
+    {
+      "id": "E03",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "A database statement timeout is causing failures in the core checkout user flow resulting in 500 errors.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 2373
+    },
+    {
+      "id": "E04",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Authentication token signature verification is failing on the core cart checkout flow.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1188
+    },
+    {
+      "id": "E05",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "A payment webhook signature mismatch failure directly impacts payment processing and core checkout/transaction flows.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1196
+    },
+    {
+      "id": "E06",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Inventory went negative during checkout, which indicates a serious data integrity flaw in a core transaction flow.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1269
+    },
+    {
+      "id": "E07",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The KeyError occurs during checkout and payment processing, which is a core user flow failing for users.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1170
+    },
+    {
+      "id": "E08",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Database connection pool exhaustion is causing login failures for users trying to authenticate.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1233
+    },
+    {
+      "id": "E09",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Database connection pool exhaustion is causing 500 errors on the core orders and authentication flows for production users.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1297
+    },
+    {
+      "id": "E10",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "A timeout connecting to the tax service is failing the core checkout user flow and returning a 503 error.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1394
+    },
+    {
+      "id": "E11",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The payment gateway is returning a 500 Internal Server Error during the checkout process, directly impacting a core user flow.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 2178
+    },
+    {
+      "id": "E12",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The payment provider is unavailable, causing the core checkout user flow to fail for all incoming requests.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1269
+    },
+    {
+      "id": "E13",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "The database primary disk is at 92% capacity and actively growing at 2% per hour, risking complete storage exhaustion and service outage within a few hours.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1182
+    },
+    {
+      "id": "E14",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "A database statement timeout on an admin reporting route affects only internal staff and does not break a core customer-facing flow or risk data loss.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1119
+    },
+    {
+      "id": "E15",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "The cart service is failing to connect to Redis, impacting a core user flow for shopping and checkout.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1158
+    },
+    {
+      "id": "E16",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Product search is failing to connect to its backend service, impacting a non-core feature while the main request still returns 200.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1182
+    },
+    {
+      "id": "E17",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Order confirmation emails are failing due to a disconnected SMTP server, which directly impacts a core user transaction flow.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1228
+    },
+    {
+      "id": "E18",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "A nightly export background job is failing due to an S3 permissions issue, which needs to be fixed soon but is not hurting users right now.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1224
+    },
+    {
+      "id": "E19",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Users are failing to upload avatars due to an invalid image format, which affects a non-core feature and does not impact core checkout or auth flows.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1266
+    },
+    {
+      "id": "E20",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Deleting a user account fails with a foreign key constraint violation on orders, completely breaking a core user account management flow.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1132
+    },
+    {
+      "id": "E21",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "A nightly background export job failed due to a MemoryError, which impacts a non-core batch process rather than immediate user flows.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1224
+    },
+    {
+      "id": "E22",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "A checkout request is failing due to a shipping rate read timeout, directly impacting a core user flow and payment process.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1296
+    },
+    {
+      "id": "E23",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "An IndexError is causing a 500 server error on the core orders user flow in production.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1251
+    },
+    {
+      "id": "E24",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Payment refunds are failing in production due to a 401 Unauthorized error from the payment provider integration, impacting a core financial transaction flow.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1228
+    },
+    {
+      "id": "E25",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "A read timeout occurred during a payment charge in the checkout flow, impacting a core user transaction path.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1240
+    },
+    {
+      "id": "E26",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The log message indicates a successful order confirmation email rather than an actual error or failure, representing log-message noise.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1453
+    },
+    {
+      "id": "E27",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The error occurs inside a logging utility during a successful checkout request, meaning core functionality is working and only log formatting is affected.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1241
+    },
+    {
+      "id": "E28",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "A 401 Unauthorized error on the login route represents expected behavior when a user provides invalid credentials.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1149
+    },
+    {
+      "id": "E29",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "This is an expected rate-limiting event for a login attempt, representing normal security protection against brute force rather than a system failure.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1300
+    },
+    {
+      "id": "E30",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "This is standard bot scanning noise looking for WordPress vulnerabilities on a non-WordPress site, resulting in a harmless 404 error.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1287
+    },
+    {
+      "id": "E31",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "A KeyError in recommendation generation impacts a secondary feature on the product page while the main request still returns a successful status code.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1250
+    },
+    {
+      "id": "E32",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "A background script error in legacy coupon parsing that does not affect current user flows and can be queued for regular triage.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1209
+    },
+    {
+      "id": "E33",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "This is an expected and handled duplicate webhook event returning a status 200, which requires no immediate action.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1368
+    },
+    {
+      "id": "E34",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The database statement timeout error occurred in a staging environment, which has no direct impact on production users.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1260
+    },
+    {
+      "id": "E35",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The error occurred in a development environment, so it has no production user impact.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1173
+    },
+    {
+      "id": "E36",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "A 422 Unprocessable Entity error indicates a client-side validation failure due to missing input parameters rather than a server fault.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1234
+    },
+    {
+      "id": "E37",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "This is a standard deprecation warning for a future Python version and has no immediate impact on production user flows.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1062
+    },
+    {
+      "id": "E38",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "This is an expected 400 client error caused by a malformed search query parameter resembling a SQL injection attempt, which was correctly rejected by the application.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1141
+    },
+    {
+      "id": "E39",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The timeout occurred in a non-critical analytics tracking background call while the overall HTTP response successfully returned status 200 to the client.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1273
+    },
+    {
+      "id": "E40",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "A normal websocket connection closure with code 1001 indicating going away does not impact core user flows or indicate an active defect requiring an immediate page.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1278
+    },
+    {
+      "id": "E41",
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "The checkout 5xx error rate spike was transient and already recovered 20 minutes before the alert fired.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1319
+    },
+    {
+      "id": "E42",
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "This is a duplicate of an ongoing incident that the on-call engineer is already actively investigating.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1240
+    },
+    {
+      "id": "E43",
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The database connection error during checkout is expected and occurring inside an active scheduled maintenance window for a postgres upgrade.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1306
+    },
+    {
+      "id": "E44",
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "The database primary already failed over successfully, replication is healthy, and the error rate has returned to baseline without requiring immediate paging.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1173
+    },
+    {
+      "id": "E45",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "The production TLS certificate for the main shop domain expires in two days and automated renewal has failed, threatening core user flows and secure access.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1205
+    },
+    {
+      "id": "E46",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": false,
+      "reason": "This is a security warning log regarding staff login anomaly from a new location, but the login request returned status 200 and does not indicate an active system failure or immediate breach requiring a page.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1330
+    },
+    {
+      "id": "E47",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "A core user flow like checkout is experiencing a rising 5xx error rate in production, directly impacting transactions and revenue.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1210
+    },
+    {
+      "id": "E48",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "Massive volume of failed logins indicates an active brute-force or credential-stuffing attack targeting authentication.",
+      "assessor": "llm",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": null,
+      "wall_ms": 1268
+    }
+  ]
+}

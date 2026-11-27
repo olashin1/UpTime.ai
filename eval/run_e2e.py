@@ -92,6 +92,7 @@ def main() -> None:
     parser.add_argument("--budget", type=int, default=170)
     parser.add_argument("--screenshot", default=str(ROOT / "docs" / "dashboard.png"))
     parser.add_argument("--assessor", default="llm_repo", help="use 'rules' for a free plumbing check")
+    parser.add_argument("--cases", nargs="*", help="run only these case ids (output: e2e_subset.json)")
     args = parser.parse_args()
 
     configure_budget("e2e", args.budget)
@@ -123,7 +124,7 @@ def main() -> None:
     ]
 
     cases = {case["id"]: case for case in load_cases()}
-    sample = [cases[case_id] for case_id in E2E_SAMPLE]
+    sample = [cases[case_id] for case_id in (args.cases or E2E_SAMPLE)]
     assert not any(case.get("recent_incidents") for case in sample), "sample must not need seeded history"
     rows = []
     before = calls_used()
@@ -190,7 +191,10 @@ def main() -> None:
                 if index == 0 and args.assessor == "llm_repo":
                     # Screenshot the first case once its patch recommendation has also landed.
                     page.wait_for_selector("text=/1 queued/", timeout=120_000)
-                    page.locator(f'[data-incident-id="{incident_id}"] button', has_text="Open").first.click()
+                    # The dashboard auto-expands the newest event; only click if it is collapsed.
+                    open_button = page.locator(f'[data-incident-id="{incident_id}"] button', has_text="Open")
+                    if open_button.count():
+                        open_button.first.click()
                     page.wait_for_timeout(500)
                     os.makedirs(os.path.dirname(args.screenshot), exist_ok=True)
                     page.screenshot(path=args.screenshot, full_page=True)
@@ -205,9 +209,11 @@ def main() -> None:
         logs.close()
 
     out = {"mode": f"e2e_{args.assessor}", "ref": args.ref, "repo": REPO, "source_root": SOURCE_ROOT,
-           "sample": E2E_SAMPLE, "gemini_calls": calls_used() - before,
+           "sample": args.cases or E2E_SAMPLE, "gemini_calls": calls_used() - before,
            "fallbacks": sum(str(r["assessor"]).endswith("fallback_rules") for r in rows), "rows": rows}
     name = "e2e.json" if args.assessor == "llm_repo" else f"e2e_{args.assessor}.json"
+    if args.cases:
+        name = "e2e_subset.json"
     (RESULTS_DIR / name).write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
     print(f"e2e: {len(rows)} cases, gemini calls {out['gemini_calls']}, ledger {LEDGER}")
 

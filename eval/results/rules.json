@@ -1,0 +1,875 @@
+{
+  "mode": "rules",
+  "ref": "oncall-improvements",
+  "repo": null,
+  "source_root": null,
+  "model": null,
+  "gemini_calls": 0,
+  "fallbacks": 0,
+  "rows": [
+    {
+      "id": "E01",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 323
+    },
+    {
+      "id": "E02",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E03",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E04",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E05",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E06",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=error, status_code=200.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E07",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E08",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E09",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E10",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=503.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E11",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=error, status_code=200.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E12",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=503.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E13",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=warning, status_code=None.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E14",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E15",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=200.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E16",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=200.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E17",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=None.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E18",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=None.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E19",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E20",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E21",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=fatal, status_code=None.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E22",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=200.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E23",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E24",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E25",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=200.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E26",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=None.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E27",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=200.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E28",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=warning, status_code=401.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E29",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=warning, status_code=429.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E30",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=warning, status_code=404.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E31",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=200.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E32",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=None.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E33",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=warning, status_code=200.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E34",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E35",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E36",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=warning, status_code=422.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E37",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=warning, status_code=None.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E38",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=warning, status_code=400.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E39",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=200.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E40",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=error, status_code=None.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E41",
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=warning, status_code=None.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E42",
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E43",
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E44",
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "Keyword rule: level=warning, status_code=None.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E45",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=warning, status_code=None.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E46",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=warning, status_code=200.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E47",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=warning, status_code=None.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    },
+    {
+      "id": "E48",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Keyword rule: level=warning, status_code=None.",
+      "assessor": "rules",
+      "model": null,
+      "context_files": null,
+      "wall_ms": 0
+    }
+  ]
+}

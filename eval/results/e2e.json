@@ -1,0 +1,432 @@
+{
+  "mode": "e2e_llm_repo",
+  "ref": "43b0a2d776307775ed5dce20cbb410bb22b2c0b4",
+  "repo": "olashin1/UpTime.ai",
+  "source_root": "eval/fixture_repo",
+  "sample": [
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05",
+    "E13",
+    "E14",
+    "E15",
+    "E16",
+    "E17",
+    "E25",
+    "E26",
+    "E27",
+    "E28",
+    "E29",
+    "E37",
+    "E38",
+    "E39",
+    "E40",
+    "E41"
+  ],
+  "gemini_calls": 20,
+  "fallbacks": 0,
+  "rows": [
+    {
+      "id": "E01",
+      "incident_id": 1,
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "The checkout route is failing with a 500 error when attempting to place an order, directly impacting the core revenue flow.",
+      "dashboard_latency_ms": 8003,
+      "arrival_offset_ms": 147,
+      "server_latency_ms": 3985,
+      "assessor_ms": 1547
+    },
+    {
+      "id": "E02",
+      "incident_id": 1,
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "The core checkout flow is failing because the payment provider is returning errors and charges cannot be completed after retries.",
+      "dashboard_latency_ms": 3392,
+      "arrival_offset_ms": 1046,
+      "server_latency_ms": 1641,
+      "assessor_ms": 1263
+    },
+    {
+      "id": "E03",
+      "incident_id": 1,
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "The checkout flow is failing due to database statement timeouts during stock reservation.",
+      "dashboard_latency_ms": 2893,
+      "arrival_offset_ms": 1209,
+      "server_latency_ms": 1684,
+      "assessor_ms": 1294
+    },
+    {
+      "id": "E04",
+      "incident_id": 1,
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "Users are encountering 500 errors when accessing their cart because authentication token signature verification is failing.",
+      "dashboard_latency_ms": 4919,
+      "arrival_offset_ms": 3351,
+      "server_latency_ms": 1571,
+      "assessor_ms": 1218
+    },
+    {
+      "id": "E05",
+      "incident_id": 1,
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "assessor": "llm_repo",
+      "reason": "A payment webhook signature mismatch typically represents misconfigured test traffic, bot noise, or an invalid request, and the payment provider will automatically retry.",
+      "dashboard_latency_ms": 3389,
+      "arrival_offset_ms": 667,
+      "server_latency_ms": 1786,
+      "assessor_ms": 1405
+    },
+    {
+      "id": "E13",
+      "incident_id": 1,
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "Database primary disk usage is at 92% and growing rapidly at 2%/hour, threatening imminent database failure and data loss.",
+      "dashboard_latency_ms": 2907,
+      "arrival_offset_ms": 1574,
+      "server_latency_ms": 1481,
+      "assessor_ms": 1202
+    },
+    {
+      "id": "E14",
+      "incident_id": 1,
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "The database query timeout occurs on an internal staff sales report endpoint that is not part of any core customer flow and can be addressed during normal working hours.",
+      "dashboard_latency_ms": 4439,
+      "arrival_offset_ms": 3810,
+      "server_latency_ms": 1454,
+      "assessor_ms": 1097
+    },
+    {
+      "id": "E15",
+      "incident_id": 1,
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "Redis connection failure is caught and handled with a fallback to Postgres, resulting in a successful cart request with no user-facing impact.",
+      "dashboard_latency_ms": 19208,
+      "arrival_offset_ms": 1072,
+      "server_latency_ms": 16644,
+      "assessor_ms": 1282
+    },
+    {
+      "id": "E16",
+      "incident_id": 1,
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "The connection error to the internal search service is caught and handled with a working database fallback, meaning user requests still succeed.",
+      "dashboard_latency_ms": 3895,
+      "arrival_offset_ms": 346,
+      "server_latency_ms": 1699,
+      "assessor_ms": 1289
+    },
+    {
+      "id": "E17",
+      "incident_id": 1,
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "The email sending function has built-in retries with max_attempts=8 and backoff, meaning transient SMTP failures will be recovered automatically without causing data loss.",
+      "dashboard_latency_ms": 3398,
+      "arrival_offset_ms": 646,
+      "server_latency_ms": 1880,
+      "assessor_ms": 1520
+    },
+    {
+      "id": "E25",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "This is an expected retry attempt for an intermittent payment gateway timeout which is caught and handled by the retry logic in the payments module.",
+      "dashboard_latency_ms": 3900,
+      "arrival_offset_ms": 136,
+      "server_latency_ms": 2002,
+      "assessor_ms": 1708
+    },
+    {
+      "id": "E26",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "The error level is incorrectly used on a log message that reports a successful order confirmation email.",
+      "dashboard_latency_ms": 4431,
+      "arrival_offset_ms": 3669,
+      "server_latency_ms": 1634,
+      "assessor_ms": 1365
+    },
+    {
+      "id": "E27",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "The checkout payment succeeded and the exception in logging is caught safely without failing the user request, so it does not require paging.",
+      "dashboard_latency_ms": 5435,
+      "arrival_offset_ms": 2981,
+      "server_latency_ms": 1758,
+      "assessor_ms": 1340
+    },
+    {
+      "id": "E28",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "This is a standard HTTP 401 Unauthorized response resulting from a user entering invalid login credentials.",
+      "dashboard_latency_ms": 3894,
+      "arrival_offset_ms": 163,
+      "server_latency_ms": 1550,
+      "assessor_ms": 1265
+    },
+    {
+      "id": "E29",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "This is an expected client-side rate limit response (429) on the login route indicating a potential brute-force attempt or repeated login failures from a single IP address, requiring no immediate intervention.",
+      "dashboard_latency_ms": 4417,
+      "arrival_offset_ms": 3975,
+      "server_latency_ms": 1512,
+      "assessor_ms": 1266
+    },
+    {
+      "id": "E37",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "This is a standard python deprecation warning that has no immediate impact on user functionality.",
+      "dashboard_latency_ms": 5433,
+      "arrival_offset_ms": 2597,
+      "server_latency_ms": 1462,
+      "assessor_ms": 1216
+    },
+    {
+      "id": "E38",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "This is an expected client-side 400 error resulting from a SQL injection scanner probing the search endpoint.",
+      "dashboard_latency_ms": 3903,
+      "arrival_offset_ms": 602,
+      "server_latency_ms": 1368,
+      "assessor_ms": 1121
+    },
+    {
+      "id": "E39",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "The timeout occurs in non-core analytics event forwarding where the exception is already caught and reported without affecting the user response.",
+      "dashboard_latency_ms": 5444,
+      "arrival_offset_ms": 2854,
+      "server_latency_ms": 1538,
+      "assessor_ms": 1163
+    },
+    {
+      "id": "E40",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "ConnectionClosedOK is an expected informational exception when a client closes a websocket connection normally.",
+      "dashboard_latency_ms": 4944,
+      "arrival_offset_ms": 3392,
+      "server_latency_ms": 1559,
+      "assessor_ms": 1192
+    },
+    {
+      "id": "E41",
+      "incident_id": 1,
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "The checkout error rate spike has already recovered and the system is back to normal operation.",
+      "dashboard_latency_ms": 3903,
+      "arrival_offset_ms": 218,
+      "server_latency_ms": 1515,
+      "assessor_ms": 1157
+    }
+  ]
+}

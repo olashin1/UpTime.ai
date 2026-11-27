@@ -489,9 +489,9 @@ function ExpandableRow({
         <button type="button" onClick={onToggle} className="min-w-0 text-left" aria-expanded={isOpen}>
           <span className="block truncate text-lg font-extrabold tracking-normal text-white">{title}</span>
           <span className="mt-1 block text-sm font-medium text-slate-400">{subtitle}</span>
+          {extraBadge && <span className="mt-2 inline-block">{extraBadge}</span>}
         </button>
         <div className="flex items-center gap-3">
-          {extraBadge}
           <span className={`rounded-full px-3 py-1 text-sm font-black ${badgeClassName}`}>{badge}</span>
           <button
             type="button"

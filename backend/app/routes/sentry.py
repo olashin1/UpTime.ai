@@ -73,6 +73,7 @@ async def sentry_webhook(
     environment = event.get("environment")
     context = _request_context_from_event(event)
     full_error = _full_error_from_event(event)
+    stack_frames, stack_files = _stack_from_event(event)
 
     trace_step(
         "webhook",
@@ -146,6 +147,8 @@ async def sentry_webhook(
         route=context["route"],
         status_code=context["status_code"],
         event_type=context["event_type"],
+        stack_frames=stack_frames,
+        stack_files=stack_files,
         recent_incidents=recent_incidents,
     )
 
@@ -269,6 +272,32 @@ def _full_error_from_event(event: dict) -> str | None:
 
     unique_details = list(dict.fromkeys(detail for detail in details if detail))
     return "\n".join(unique_details) if unique_details else None
+
+
+def _stack_from_event(event: dict, max_frames: int = 12) -> tuple[list[str], list[str]]:
+    """In-app stack frames ("path:function:line", oldest first) and their unique files.
+
+    Sentry lists frames oldest call first, so the last frame is where the error was raised.
+    """
+    frames: list[str] = []
+    files: list[str] = []
+    values = (event.get("exception") or {}).get("values") or []
+
+    for value in values:
+        for frame in (value.get("stacktrace") or {}).get("frames") or []:
+            if frame.get("in_app") is False:
+                continue
+
+            path = frame.get("filename") or frame.get("abs_path")
+            if not path:
+                continue
+
+            frames.append(f"{path}:{frame.get('function') or '?'}:{frame.get('lineno') or '?'}")
+            if path not in files:
+                files.append(path)
+
+    # Prefer the files nearest the raise site when trimming.
+    return frames[-max_frames:], list(reversed(files))[:4]
 
 
 def _request_context_from_event(event: dict) -> dict:

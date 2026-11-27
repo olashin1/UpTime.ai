@@ -1,3 +1,4 @@
+import httpx
 from github import Github
 
 from app.agents.models import RepositoryContext, RepositoryFile
@@ -26,20 +27,21 @@ def load_repository_context(
     default_branch: str = "main",
     files_to_inspect: list[str] | None = None,
     max_chars_per_file: int = 4000,
+    include_defaults: bool = True,
+    source_root: str | None = None,
 ) -> RepositoryContext:
     repo_full_name = _normalize_repo_full_name(repo_full_name)
     default_branch = default_branch.strip() or "main"
-    paths = _dedupe([*(files_to_inspect or []), *DEFAULT_CONTEXT_FILES])
+    defaults = DEFAULT_CONTEXT_FILES if include_defaults else []
+    paths = _dedupe([*(files_to_inspect or []), *defaults])
+    root = (settings.repo_source_root if source_root is None else source_root).strip("/")
 
     github_token = settings.github_token.strip() if settings.github_token else None
 
     if not github_token:
-        return RepositoryContext(
-            repo_full_name=repo_full_name,
-            default_branch=default_branch,
-            summary="GitHub token is not configured, so repository context is unavailable.",
-            files=[],
-        )
+        # Public repos can still be read without a token through raw.githubusercontent.com,
+        # which is not subject to the 60 requests/hour unauthenticated API limit.
+        return _load_public_files(repo_full_name, default_branch, paths, root, max_chars_per_file)
 
     try:
         gh = Github(github_token)
@@ -59,7 +61,7 @@ def load_repository_context(
 
     for path in paths:
         try:
-            contents = repo.get_contents(path, ref=default_branch)
+            contents = repo.get_contents(_repo_path(root, path), ref=default_branch)
         except Exception:
             continue
 
@@ -86,6 +88,53 @@ def load_repository_context(
         summary=(
             f"Loaded {len(loaded_files)} repository files from {repo_full_name} "
             f"on branch {default_branch}."
+        ),
+        files=loaded_files,
+    )
+
+
+def _repo_path(root: str, path: str) -> str:
+    return f"{root}/{path}" if root else path
+
+
+def _load_public_files(
+    repo_full_name: str,
+    default_branch: str,
+    paths: list[str],
+    root: str,
+    max_chars_per_file: int,
+) -> RepositoryContext:
+    loaded_files: list[RepositoryFile] = []
+
+    with httpx.Client(timeout=15, follow_redirects=True) as client:
+        for path in paths:
+            url = (
+                f"https://raw.githubusercontent.com/{repo_full_name}/"
+                f"{default_branch}/{_repo_path(root, path)}"
+            )
+            try:
+                response = client.get(url)
+            except httpx.HTTPError:
+                continue
+
+            if response.status_code != 200:
+                continue
+
+            text = response.text
+            loaded_files.append(
+                RepositoryFile(
+                    path=path,
+                    content=text[:max_chars_per_file],
+                    truncated=len(text) > max_chars_per_file,
+                )
+            )
+
+    return RepositoryContext(
+        repo_full_name=repo_full_name,
+        default_branch=default_branch,
+        summary=(
+            f"Loaded {len(loaded_files)} public repository files from {repo_full_name} "
+            f"on branch {default_branch} (no GitHub token)."
         ),
         files=loaded_files,
     )

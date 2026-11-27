@@ -1,7 +1,11 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 from sqlmodel import Field, SQLModel
+
+
+def utc_now() -> datetime:
+    return datetime.now(timezone.utc)
 
 
 class Incident(SQLModel, table=True):
@@ -10,6 +14,7 @@ class Incident(SQLModel, table=True):
     sentry_issue_id: str
     title: str
     status: str = "detected"
+    # Sentry's own event level (error, warning, fatal, ...), as received.
     severity: str = "unknown"
 
     issue_url: Optional[str] = None
@@ -17,4 +22,12 @@ class Incident(SQLModel, table=True):
     recommendation: Optional[str] = None
     pr_url: Optional[str] = None
 
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    # Set by the investigation agent's severity + escalation assessor.
+    agent_severity: Optional[str] = None
+    escalate: Optional[bool] = None
+    escalation_reason: Optional[str] = None
+    assessor: Optional[str] = None
+    assessed_at: Optional[datetime] = None
+
+    # When the webhook was received (UTC).
+    created_at: datetime = Field(default_factory=utc_now)

@@ -28,6 +28,8 @@ class IncidentMessage(Model):
     route: Optional[str] = None
     status_code: Optional[int] = None
     event_type: Optional[str] = None
+    stack_frames: List[str] = []
+    stack_files: List[str] = []
     recent_incidents: List[RecentIncident] = []
 
 

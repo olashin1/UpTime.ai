@@ -23,12 +23,19 @@ class Settings(BaseSettings):
 
     default_repo_full_name: str | None = None
     default_branch: str = "main"
+    # Directory inside the repo that stack-trace paths are relative to ("" = repo root).
+    repo_source_root: str = ""
 
     github_token: str | None = None
 
     asi_one_api_key: str | None = None
     asi_one_base_url: str = "https://api.asi1.ai/v1"
     asi_one_model: str = "asi1"
+
+    # Severity + escalation assessor: rules | llm | llm_repo (see severity_service.py).
+    severity_assessor: str = "llm_repo"
+    gemini_api_key: str | None = None
+    gemini_model: str = "gemini-3.5-flash-lite"
 
     model_config = SettingsConfigDict(
         env_file=str(ENV_PATH),

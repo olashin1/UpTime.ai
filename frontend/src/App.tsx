@@ -13,6 +13,11 @@ type Incident = {
   repo_full_name: string | null
   recommendation: string | null
   pr_url: string | null
+  agent_severity: string | null
+  escalate: boolean | null
+  escalation_reason: string | null
+  assessor: string | null
+  assessed_at: string | null
   created_at: string
 }
 
@@ -24,6 +29,9 @@ type EventItem = {
   severity: string
   route: string
   raw: string
+  assessed: boolean
+  escalate: boolean | null
+  reason: string | null
 }
 
 type HealthScore = {
@@ -319,7 +327,32 @@ function App() {
                     badge={`${eventItem.code}`}
                     badgeClassName={codeTone(eventItem.code)}
                     meta={eventItem.severity}
+                    dataIncidentId={eventItem.id}
+                    dataAssessed={eventItem.assessed}
+                    extraBadge={
+                      eventItem.assessed ? (
+                        <span
+                          className={`rounded-full px-3 py-1 text-xs font-black uppercase ${severityTone(eventItem.severity)}`}
+                          data-testid="assessment"
+                        >
+                          {eventItem.severity}
+                          {eventItem.escalate ? ' · page' : ''}
+                        </span>
+                      ) : (
+                        <span className="rounded-full bg-[#36396d] px-3 py-1 text-xs font-black uppercase text-slate-300">
+                          assessing
+                        </span>
+                      )
+                    }
                   >
+                    {eventItem.reason && (
+                      <p className="mb-3 text-sm leading-relaxed text-slate-300">
+                        <span className="font-black text-slate-100">
+                          {eventItem.escalate ? 'Escalate: ' : 'No page: '}
+                        </span>
+                        {eventItem.reason}
+                      </p>
+                    )}
                     <pre className="whitespace-pre-wrap rounded-[6px] border border-cyan-300/10 bg-[#101238] p-4 font-mono text-sm leading-relaxed text-slate-200">
                       {eventItem.raw}
                     </pre>
@@ -429,6 +462,9 @@ function ExpandableRow({
   badgeClassName,
   meta,
   children,
+  dataIncidentId,
+  dataAssessed,
+  extraBadge,
 }: {
   isOpen: boolean
   onToggle: () => void
@@ -439,15 +475,23 @@ function ExpandableRow({
   badgeClassName: string
   meta: string
   children: React.ReactNode
+  dataIncidentId?: string
+  dataAssessed?: boolean
+  extraBadge?: React.ReactNode
 }) {
   return (
-    <article className={`rounded-[8px] border bg-[#1a1c49] transition ${isOpen ? 'border-cyan-300/30' : 'border-slate-300/10'}`}>
+    <article
+      className={`rounded-[8px] border bg-[#1a1c49] transition ${isOpen ? 'border-cyan-300/30' : 'border-slate-300/10'}`}
+      data-incident-id={dataIncidentId}
+      data-assessed={dataAssessed === undefined ? undefined : String(dataAssessed)}
+    >
       <div className="grid w-full grid-cols-[1fr_auto] items-center gap-4 px-4 py-4">
         <button type="button" onClick={onToggle} className="min-w-0 text-left" aria-expanded={isOpen}>
           <span className="block truncate text-lg font-extrabold tracking-normal text-white">{title}</span>
           <span className="mt-1 block text-sm font-medium text-slate-400">{subtitle}</span>
         </button>
         <div className="flex items-center gap-3">
+          {extraBadge}
           <span className={`rounded-full px-3 py-1 text-sm font-black ${badgeClassName}`}>{badge}</span>
           <button
             type="button"
@@ -496,14 +540,21 @@ function incidentToEvent(incident: Incident): EventItem {
     title: incident.title || 'Untitled incident',
     code,
     time: relativeTime(incident.created_at),
-    severity: incident.severity || 'unknown',
+    severity: incident.agent_severity || incident.severity || 'unknown',
     route: incident.status,
+    assessed: Boolean(incident.assessed_at),
+    escalate: incident.escalate,
+    reason: incident.escalation_reason,
     raw: [
       `incident_id: ${incident.id}`,
       `sentry_issue_id: ${incident.sentry_issue_id}`,
       `title: ${incident.title}`,
       `status: ${incident.status}`,
-      `severity: ${incident.severity}`,
+      `sentry_level: ${incident.severity}`,
+      `agent_severity: ${incident.agent_severity ?? 'pending'}`,
+      `escalate: ${incident.escalate ?? 'pending'}`,
+      `assessor: ${incident.assessor ?? 'pending'}`,
+      `assessed_at: ${incident.assessed_at ?? 'pending'}`,
       `repo_full_name: ${incident.repo_full_name ?? 'none'}`,
       `issue_url: ${incident.issue_url ?? 'none'}`,
       `created_at: ${incident.created_at}`,
@@ -610,8 +661,25 @@ function fixTone(status: string) {
   return 'bg-[#36396d] text-slate-100'
 }
 
+function severityTone(severity: string) {
+  if (severity === 'high') {
+    return 'bg-rose-300/15 text-rose-200'
+  }
+
+  if (severity === 'medium') {
+    return 'bg-orange-300/15 text-orange-200'
+  }
+
+  return 'bg-slate-300/10 text-slate-300'
+}
+
+// The backend stores UTC timestamps without an offset; read them as UTC.
+function parseUtc(value: string) {
+  return new Date(/[zZ]|[+-]\d\d:\d\d$/.test(value) ? value : `${value}Z`)
+}
+
 function relativeTime(value: string) {
-  const timestamp = new Date(value).getTime()
+  const timestamp = parseUtc(value).getTime()
 
   if (Number.isNaN(timestamp)) {
     return 'unknown time'

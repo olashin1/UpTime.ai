@@ -20,6 +20,7 @@
       },
       "rationale": "Every checkout that hits this crashes with a 500; checkout is the revenue path.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -87,6 +88,7 @@
       },
       "rationale": "Charges fail after all retries, so customers cannot pay.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -162,6 +164,7 @@
       },
       "rationale": "Statement timeouts inside checkout block orders.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -237,6 +240,7 @@
       },
       "rationale": "Token verification fails for every authenticated request: logged-in users are effectively locked out.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -312,6 +316,7 @@
       },
       "rationale": "Every provider callback is rejected, so paid orders stay 'payment pending' and do not ship; the code comment shows it keeps happening until fixed.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -379,6 +384,7 @@
       },
       "rationale": "Negative stock means items were sold that do not exist; the read-then-write race in reserve_stock keeps overselling on every concurrent checkout.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -458,6 +464,7 @@
       },
       "rationale": "Any checkout using a promo code from the new editor crashes; promotions drive a large share of orders.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -533,6 +540,7 @@
       },
       "rationale": "Login returns 500 because the database refuses connections.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -600,6 +608,7 @@
       },
       "rationale": "QueuePool timeouts mean requests across the site are waiting 30s and failing.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -675,6 +684,7 @@
       },
       "rationale": "tax.calculate deliberately has no fallback, so a tax outage blocks every checkout (503).",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -750,6 +760,7 @@
       },
       "rationale": "A live secret key was written to Sentry; it must be rotated immediately.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -825,6 +836,7 @@
       },
       "rationale": "Checkouts fail with 503 after retries are exhausted by provider rate limits.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -900,6 +912,7 @@
       },
       "rationale": "No user impact yet, but at 2%/hour the primary is full in about 4 hours, before business hours.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -939,7 +952,7 @@
                         "filename": "app/jobs/health_checks.py",
                         "module": "app.jobs.health_checks",
                         "function": "check_db_disk",
-                        "lineno": 11,
+                        "lineno": 17,
                         "in_app": true,
                         "context_line": "sentry_sdk.capture_message("
                       }
@@ -963,6 +976,7 @@
       },
       "rationale": "Internal ops report only; customers unaffected; fix during business hours.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -1030,6 +1044,7 @@
       },
       "rationale": "load_cart catches Redis errors and reads from Postgres; carts still work, just slower.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -1105,6 +1120,7 @@
       },
       "rationale": "search_products falls back to a DB LIKE query; results are worse but search works.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -1172,6 +1188,7 @@
       },
       "rationale": "Emails are retried by the worker (8 attempts, 5 min apart); orders are unaffected.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -1231,6 +1248,7 @@
       },
       "rationale": "Internal analytics export; the next run re-exports the missed night. No customer impact.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -1290,6 +1308,7 @@
       },
       "rationale": "Profile picture upload is a non-core feature affecting only some file types.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -1357,6 +1376,7 @@
       },
       "rationale": "Privacy deletions fail and must be fixed within the 30-day window, but nothing breaks for users tonight.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -1424,6 +1444,7 @@
       },
       "rationale": "Fatal crash, but in the nightly export worker; the next run catches up and customers are unaffected.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -1483,6 +1504,7 @@
       },
       "rationale": "get_rates falls back to a flat rate, so checkout completes; shipping charges are approximate.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -1558,6 +1580,7 @@
       },
       "rationale": "Order history page 500s for users with no orders; buying still works.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -1625,6 +1648,7 @@
       },
       "rationale": "Only the refund-only key is affected: support cannot issue refunds, but charges and checkout work.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -1700,6 +1724,7 @@
       },
       "rationale": "The charge loop reports each failed attempt and retries; attempt 1 of 3 timing out is routine flakiness.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -1776,6 +1801,7 @@
       },
       "rationale": "A success message ('sent succesfully', with typos) is logged at ERROR level; nothing failed.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -1839,6 +1865,7 @@
       },
       "rationale": "Bad format string in a log helper; checkout catches it after the order is committed.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -1914,6 +1941,7 @@
       },
       "rationale": "A user typed the wrong password; expected 401.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -1981,6 +2009,7 @@
       },
       "rationale": "The rate limiter blocking a burst of logins from one IP is the protection working.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -2032,6 +2061,7 @@
       },
       "rationale": "Bot scanning for WordPress; route does not exist.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -2076,6 +2106,7 @@
       },
       "rationale": "similar_products swallows errors and returns []; the page renders without the widget.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -2143,6 +2174,7 @@
       },
       "rationale": "Only a manually run staff script imports this module; no API route is affected.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -2210,6 +2242,7 @@
       },
       "rationale": "At-least-once delivery; the handler detects the duplicate and ignores it as designed.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -2281,6 +2314,7 @@
       },
       "rationale": "Same error as E03 but in staging: no customers affected.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -2356,6 +2390,7 @@
       },
       "rationale": "Same crash as E01 but from a developer's machine.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -2423,6 +2458,7 @@
       },
       "rationale": "Client sent a malformed request; 422 is the correct response.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -2474,6 +2510,7 @@
       },
       "rationale": "Deprecation warning; no behavior change.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -2510,6 +2547,7 @@
       },
       "rationale": "Scanner payload rejected with a 400 by input validation.",
       "context_needed": false,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -2577,6 +2615,7 @@
       },
       "rationale": "Client analytics forwarding fails silently and returns ok; no customer impact.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -2644,6 +2683,7 @@
       },
       "rationale": "Customer closed the tab during live tracking; normal disconnect.",
       "context_needed": true,
+      "recent_incidents": [],
       "sentry_webhook": {
         "action": "triggered",
         "actor": {
@@ -2682,6 +2722,575 @@
                         "lineno": 13,
                         "in_app": true,
                         "context_line": "await ws.send_json(update)"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "triggered_rule": "Any new or regressed issue"
+        }
+      }
+    },
+    {
+      "id": "E41",
+      "name": "Checkout outage already auto-recovered",
+      "category": "recovered",
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "rationale": "A real checkout outage (high), but it recovered on its own 20 minutes ago; nothing to do tonight beyond a follow-up ticket.",
+      "context_needed": false,
+      "recent_incidents": [],
+      "sentry_webhook": {
+        "action": "triggered",
+        "actor": {
+          "type": "application",
+          "name": "Sentry"
+        },
+        "data": {
+          "event": {
+            "event_id": "evalcasee41",
+            "issue_id": "7100041",
+            "title": "Checkout 5xx rate peaked at 41% for 6 min and recovered at 03:12 UTC (now 0.3%)",
+            "culprit": "app.jobs.health_checks in check_checkout_error_rate",
+            "level": "warning",
+            "environment": "production",
+            "platform": "python",
+            "web_url": "https://acme.sentry.io/issues/7100041/",
+            "extra": {},
+            "datetime": "2026-11-26T03:32:00Z",
+            "logentry": {
+              "formatted": "Checkout 5xx rate peaked at 41% for 6 min and recovered at 03:12 UTC (now 0.3%)"
+            },
+            "message": "Checkout 5xx rate peaked at 41% for 6 min and recovered at 03:12 UTC (now 0.3%)",
+            "exception": {
+              "values": [
+                {
+                  "type": "Message",
+                  "value": "Checkout 5xx rate peaked at 41% for 6 min and recovered at 03:12 UTC (now 0.3%)",
+                  "stacktrace": {
+                    "frames": [
+                      {
+                        "filename": "starlette/routing.py",
+                        "module": "starlette/routing.py",
+                        "function": "handle",
+                        "lineno": 276,
+                        "in_app": false
+                      },
+                      {
+                        "filename": "app/jobs/health_checks.py",
+                        "module": "app.jobs.health_checks",
+                        "function": "check_checkout_error_rate",
+                        "lineno": 27,
+                        "in_app": true,
+                        "context_line": "if stats.recovered_after_spike:"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "triggered_rule": "Any new or regressed issue"
+        }
+      }
+    },
+    {
+      "id": "E42",
+      "name": "Duplicate of an incident already being worked",
+      "category": "duplicate",
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "rationale": "Same checkout failure as an open incident that on-call has acknowledged and is mitigating; paging again adds noise, not help.",
+      "context_needed": false,
+      "recent_incidents": [
+        {
+          "title": "PaymentProviderUnavailable: charge failed after 3 attempts",
+          "status": "investigating",
+          "severity": "high",
+          "recommendation": "Acknowledged by on-call at 02:41 UTC; provider incident confirmed, mitigation in progress"
+        }
+      ],
+      "sentry_webhook": {
+        "action": "triggered",
+        "actor": {
+          "type": "application",
+          "name": "Sentry"
+        },
+        "data": {
+          "event": {
+            "event_id": "evalcasee42",
+            "issue_id": "7100042",
+            "title": "PaymentProviderUnavailable: charge failed after 3 attempts",
+            "culprit": "app.payments in charge",
+            "level": "error",
+            "environment": "production",
+            "platform": "python",
+            "web_url": "https://acme.sentry.io/issues/7100042/",
+            "extra": {
+              "route": "/checkout",
+              "method": "POST",
+              "status_code": 500
+            },
+            "datetime": "2026-11-26T02:58:00Z",
+            "exception": {
+              "values": [
+                {
+                  "type": "PaymentProviderUnavailable",
+                  "value": "charge failed after 3 attempts",
+                  "stacktrace": {
+                    "frames": [
+                      {
+                        "filename": "starlette/routing.py",
+                        "module": "starlette/routing.py",
+                        "function": "handle",
+                        "lineno": 276,
+                        "in_app": false
+                      },
+                      {
+                        "filename": "app/checkout.py",
+                        "module": "app.checkout",
+                        "function": "place_order",
+                        "lineno": 27,
+                        "in_app": true,
+                        "context_line": "charge = payments.charge(user.payment_method_id, total)"
+                      },
+                      {
+                        "filename": "app/payments.py",
+                        "module": "app.payments",
+                        "function": "charge",
+                        "lineno": 44,
+                        "in_app": true,
+                        "context_line": "raise PaymentProviderUnavailable(f\"charge failed after {MAX_ATTEMPTS} attempts\") from last_error"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "request": {
+              "method": "POST",
+              "url": "https://shop.acme.example/checkout"
+            }
+          },
+          "triggered_rule": "Any new or regressed issue"
+        }
+      }
+    },
+    {
+      "id": "E43",
+      "name": "Errors during scheduled maintenance",
+      "category": "maintenance",
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "rationale": "Checkout is failing (high), but the event is tagged with the active planned DB upgrade window, so the failures are expected and the team doing the work is already on it.",
+      "context_needed": true,
+      "recent_incidents": [],
+      "sentry_webhook": {
+        "action": "triggered",
+        "actor": {
+          "type": "application",
+          "name": "Sentry"
+        },
+        "data": {
+          "event": {
+            "event_id": "evalcasee43",
+            "issue_id": "7100043",
+            "title": "OperationalError: terminating connection due to administrator command",
+            "culprit": "app.inventory in reserve_stock",
+            "level": "error",
+            "environment": "production",
+            "platform": "python",
+            "web_url": "https://acme.sentry.io/issues/7100043/",
+            "extra": {
+              "route": "/checkout",
+              "method": "POST",
+              "status_code": 500
+            },
+            "datetime": "2026-11-26T02:20:00Z",
+            "tags": [
+              [
+                "maintenance_window",
+                "pg16-upgrade"
+              ],
+              [
+                "maintenance_until",
+                "2026-11-26T03:00:00Z"
+              ]
+            ],
+            "exception": {
+              "values": [
+                {
+                  "type": "sqlalchemy.exc.OperationalError",
+                  "value": "(psycopg2.errors.AdminShutdown) terminating connection due to administrator command",
+                  "stacktrace": {
+                    "frames": [
+                      {
+                        "filename": "starlette/routing.py",
+                        "module": "starlette/routing.py",
+                        "function": "handle",
+                        "lineno": 276,
+                        "in_app": false
+                      },
+                      {
+                        "filename": "app/checkout.py",
+                        "module": "app.checkout",
+                        "function": "place_order",
+                        "lineno": 26,
+                        "in_app": true,
+                        "context_line": "inventory.reserve_stock(session, line_items)"
+                      },
+                      {
+                        "filename": "app/inventory.py",
+                        "module": "app.inventory",
+                        "function": "reserve_stock",
+                        "lineno": 13,
+                        "in_app": true,
+                        "context_line": "text(\"SELECT quantity FROM stock WHERE sku = :sku\"), {\"sku\": item.sku}"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "request": {
+              "method": "POST",
+              "url": "https://shop.acme.example/checkout"
+            }
+          },
+          "triggered_rule": "Any new or regressed issue"
+        }
+      }
+    },
+    {
+      "id": "E44",
+      "name": "DB failover completed automatically",
+      "category": "recovered",
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "rationale": "Writes failed for 47s (high: data-path outage) but the managed failover finished and error rates are back to baseline; review in the morning.",
+      "context_needed": false,
+      "recent_incidents": [],
+      "sentry_webhook": {
+        "action": "triggered",
+        "actor": {
+          "type": "application",
+          "name": "Sentry"
+        },
+        "data": {
+          "event": {
+            "event_id": "evalcasee44",
+            "issue_id": "7100044",
+            "title": "DB primary failed over to replica db-2; writes failed for 47s; replication healthy, error rate back to baseline",
+            "culprit": "app.jobs.health_checks in check_db_failover",
+            "level": "warning",
+            "environment": "production",
+            "platform": "python",
+            "web_url": "https://acme.sentry.io/issues/7100044/",
+            "extra": {},
+            "datetime": "2026-11-26T04:05:00Z",
+            "logentry": {
+              "formatted": "DB primary failed over to replica db-2; writes failed for 47s; replication healthy, error rate back to baseline"
+            },
+            "message": "DB primary failed over to replica db-2; writes failed for 47s; replication healthy, error rate back to baseline",
+            "exception": {
+              "values": [
+                {
+                  "type": "Message",
+                  "value": "DB primary failed over to replica db-2; writes failed for 47s; replication healthy, error rate back to baseline",
+                  "stacktrace": {
+                    "frames": [
+                      {
+                        "filename": "starlette/routing.py",
+                        "module": "starlette/routing.py",
+                        "function": "handle",
+                        "lineno": 276,
+                        "in_app": false
+                      },
+                      {
+                        "filename": "app/jobs/health_checks.py",
+                        "module": "app.jobs.health_checks",
+                        "function": "check_db_failover",
+                        "lineno": 44,
+                        "in_app": true,
+                        "context_line": "if status.failover_completed:"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "triggered_rule": "Any new or regressed issue"
+        }
+      }
+    },
+    {
+      "id": "E45",
+      "name": "TLS certificate expires in 2 days, renewal failed",
+      "category": "certificate",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "rationale": "No impact yet, but auto-renewal failed and it is Friday night: if nobody renews by hand the whole site goes down on Sunday, before the next business day.",
+      "context_needed": false,
+      "recent_incidents": [],
+      "sentry_webhook": {
+        "action": "triggered",
+        "actor": {
+          "type": "application",
+          "name": "Sentry"
+        },
+        "data": {
+          "event": {
+            "event_id": "evalcasee45",
+            "issue_id": "7100045",
+            "title": "TLS certificate for shop.acme.example expires in 2 days (2026-11-29T22:10:00Z); auto-renewal failed: DNS-01 challenge timed out",
+            "culprit": "app.jobs.health_checks in check_tls_expiry",
+            "level": "warning",
+            "environment": "production",
+            "platform": "python",
+            "web_url": "https://acme.sentry.io/issues/7100045/",
+            "extra": {},
+            "datetime": "2026-11-27T22:10:00Z",
+            "logentry": {
+              "formatted": "TLS certificate for shop.acme.example expires in 2 days (2026-11-29T22:10:00Z); auto-renewal failed: DNS-01 challenge timed out"
+            },
+            "message": "TLS certificate for shop.acme.example expires in 2 days (2026-11-29T22:10:00Z); auto-renewal failed: DNS-01 challenge timed out",
+            "exception": {
+              "values": [
+                {
+                  "type": "Message",
+                  "value": "TLS certificate for shop.acme.example expires in 2 days (2026-11-29T22:10:00Z); auto-renewal failed: DNS-01 challenge timed out",
+                  "stacktrace": {
+                    "frames": [
+                      {
+                        "filename": "starlette/routing.py",
+                        "module": "starlette/routing.py",
+                        "function": "handle",
+                        "lineno": 276,
+                        "in_app": false
+                      },
+                      {
+                        "filename": "app/jobs/health_checks.py",
+                        "module": "app.jobs.health_checks",
+                        "function": "check_tls_expiry",
+                        "lineno": 55,
+                        "in_app": true,
+                        "context_line": "if cert.days_left <= TLS_WARN_DAYS:"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "triggered_rule": "Any new or regressed issue"
+        }
+      }
+    },
+    {
+      "id": "E46",
+      "name": "Staff login from new country after password reset",
+      "category": "security",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "rationale": "Nothing is broken, but this pattern looks like takeover of an account that can issue refunds; it needs a human to check now.",
+      "context_needed": false,
+      "recent_incidents": [],
+      "sentry_webhook": {
+        "action": "triggered",
+        "actor": {
+          "type": "application",
+          "name": "Sentry"
+        },
+        "data": {
+          "event": {
+            "event_id": "evalcasee46",
+            "issue_id": "7100046",
+            "title": "Staff login for ops-lead from new country RO 6 min after password reset (new device d-91f3)",
+            "culprit": "app.security in check_staff_login",
+            "level": "warning",
+            "environment": "production",
+            "platform": "python",
+            "web_url": "https://acme.sentry.io/issues/7100046/",
+            "extra": {
+              "route": "/login",
+              "method": "POST",
+              "status_code": 200
+            },
+            "datetime": "2026-11-26T01:47:00Z",
+            "logentry": {
+              "formatted": "Staff login for ops-lead from new country RO 6 min after password reset (new device d-91f3)"
+            },
+            "message": "Staff login for ops-lead from new country RO 6 min after password reset (new device d-91f3)",
+            "exception": {
+              "values": [
+                {
+                  "type": "Message",
+                  "value": "Staff login for ops-lead from new country RO 6 min after password reset (new device d-91f3)",
+                  "stacktrace": {
+                    "frames": [
+                      {
+                        "filename": "starlette/routing.py",
+                        "module": "starlette/routing.py",
+                        "function": "handle",
+                        "lineno": 276,
+                        "in_app": false
+                      },
+                      {
+                        "filename": "app/security.py",
+                        "module": "app.security",
+                        "function": "check_staff_login",
+                        "lineno": 13,
+                        "in_app": true,
+                        "context_line": "if country not in user.known_countries and user.minutes_since_password_reset() < 60:"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "request": {
+              "method": "POST",
+              "url": "https://shop.acme.example/login"
+            }
+          },
+          "triggered_rule": "Any new or regressed issue"
+        }
+      }
+    },
+    {
+      "id": "E47",
+      "name": "Checkout error rate climbing steadily",
+      "category": "trend",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "rationale": "6% of checkouts failing now (medium), but rising 5 points/hour: it will be a major outage within hours if nobody looks.",
+      "context_needed": false,
+      "recent_incidents": [],
+      "sentry_webhook": {
+        "action": "triggered",
+        "actor": {
+          "type": "application",
+          "name": "Sentry"
+        },
+        "data": {
+          "event": {
+            "event_id": "evalcasee47",
+            "issue_id": "7100047",
+            "title": "Checkout 5xx rate at 6% and rising 5 points/hour for the last 3 hours",
+            "culprit": "app.jobs.health_checks in check_checkout_error_rate",
+            "level": "warning",
+            "environment": "production",
+            "platform": "python",
+            "web_url": "https://acme.sentry.io/issues/7100047/",
+            "extra": {},
+            "datetime": "2026-11-26T00:30:00Z",
+            "logentry": {
+              "formatted": "Checkout 5xx rate at 6% and rising 5 points/hour for the last 3 hours"
+            },
+            "message": "Checkout 5xx rate at 6% and rising 5 points/hour for the last 3 hours",
+            "exception": {
+              "values": [
+                {
+                  "type": "Message",
+                  "value": "Checkout 5xx rate at 6% and rising 5 points/hour for the last 3 hours",
+                  "stacktrace": {
+                    "frames": [
+                      {
+                        "filename": "starlette/routing.py",
+                        "module": "starlette/routing.py",
+                        "function": "handle",
+                        "lineno": 276,
+                        "in_app": false
+                      },
+                      {
+                        "filename": "app/jobs/health_checks.py",
+                        "module": "app.jobs.health_checks",
+                        "function": "check_checkout_error_rate",
+                        "lineno": 34,
+                        "in_app": true,
+                        "context_line": "elif stats.current_pct >= ERROR_RATE_WARN_PCT:"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "triggered_rule": "Any new or regressed issue"
+        }
+      }
+    },
+    {
+      "id": "E48",
+      "name": "Distributed credential stuffing",
+      "category": "security",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "rationale": "An active attack across many IPs that per-IP rate limiting does not stop, with some successful logins; needs blocking and forced resets now.",
+      "context_needed": true,
+      "recent_incidents": [],
+      "sentry_webhook": {
+        "action": "triggered",
+        "actor": {
+          "type": "application",
+          "name": "Sentry"
+        },
+        "data": {
+          "event": {
+            "event_id": "evalcasee48",
+            "issue_id": "7100048",
+            "title": "48210 failed logins in the last hour from 1312 IPs (37 successful logins to accounts with a failed attempt)",
+            "culprit": "app.security in check_failed_login_volume",
+            "level": "warning",
+            "environment": "production",
+            "platform": "python",
+            "web_url": "https://acme.sentry.io/issues/7100048/",
+            "extra": {},
+            "datetime": "2026-11-26T03:05:00Z",
+            "logentry": {
+              "formatted": "48210 failed logins in the last hour from 1312 IPs (37 successful logins to accounts with a failed attempt)"
+            },
+            "message": "48210 failed logins in the last hour from 1312 IPs (37 successful logins to accounts with a failed attempt)",
+            "exception": {
+              "values": [
+                {
+                  "type": "Message",
+                  "value": "48210 failed logins in the last hour from 1312 IPs (37 successful logins to accounts with a failed attempt)",
+                  "stacktrace": {
+                    "frames": [
+                      {
+                        "filename": "starlette/routing.py",
+                        "module": "starlette/routing.py",
+                        "function": "handle",
+                        "lineno": 276,
+                        "in_app": false
+                      },
+                      {
+                        "filename": "app/security.py",
+                        "module": "app.security",
+                        "function": "check_failed_login_volume",
+                        "lineno": 24,
+                        "in_app": true,
+                        "context_line": "if stats.failed_last_hour >= FAILED_LOGIN_ALERT_PER_HOUR:"
                       }
                     ]
                   }

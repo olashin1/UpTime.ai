@@ -349,6 +349,76 @@ CASES = [
          exc=("websockets.exceptions.ConnectionClosedOK", "received 1001 (going away); then sent 1001 (going away)"),
          frames=[frame("app/live_tracking.py", "order_updates", "await ws.send_json(update)")],
          level="error", env="production", req=None),
+    # ------------------------------------------- severity/escalation disagree
+    dict(id="E41", name="Checkout outage already auto-recovered", category="recovered",
+         severity="high", escalate=False, context_needed=False,
+         rationale="A real checkout outage (high), but it recovered on its own 20 minutes ago; nothing to do "
+         "tonight beyond a follow-up ticket.",
+         title="Checkout 5xx rate peaked at 41% for 6 min and recovered at 03:12 UTC (now 0.3%)",
+         message="Checkout 5xx rate peaked at 41% for 6 min and recovered at 03:12 UTC (now 0.3%)",
+         frames=[frame("app/jobs/health_checks.py", "check_checkout_error_rate", "if stats.recovered_after_spike:")],
+         level="warning", env="production", req=None, datetime="2026-11-26T03:32:00Z"),
+    dict(id="E42", name="Duplicate of an incident already being worked", category="duplicate",
+         severity="high", escalate=False, context_needed=False,
+         rationale="Same checkout failure as an open incident that on-call has acknowledged and is mitigating; "
+         "paging again adds noise, not help.",
+         title="PaymentProviderUnavailable: charge failed after 3 attempts",
+         exc=("PaymentProviderUnavailable", "charge failed after 3 attempts"),
+         frames=[CHECKOUT_CHARGE, CHARGE_GIVEUP], level="error", env="production",
+         req=("POST", "/checkout", 500), datetime="2026-11-26T02:58:00Z",
+         recent_incidents=[dict(title="PaymentProviderUnavailable: charge failed after 3 attempts",
+                                status="investigating", severity="high",
+                                recommendation="Acknowledged by on-call at 02:41 UTC; provider incident confirmed, "
+                                "mitigation in progress")]),
+    dict(id="E43", name="Errors during scheduled maintenance", category="maintenance",
+         severity="high", escalate=False, context_needed=True,
+         rationale="Checkout is failing (high), but the event is tagged with the active planned DB upgrade "
+         "window, so the failures are expected and the team doing the work is already on it.",
+         title="OperationalError: terminating connection due to administrator command",
+         exc=("sqlalchemy.exc.OperationalError", "(psycopg2.errors.AdminShutdown) terminating connection due to administrator command"),
+         frames=[CHECKOUT_STOCK, frame("app/inventory.py", "reserve_stock", 'text("SELECT quantity FROM stock')],
+         level="error", env="production", req=("POST", "/checkout", 500), datetime="2026-11-26T02:20:00Z",
+         tags={"maintenance_window": "pg16-upgrade", "maintenance_until": "2026-11-26T03:00:00Z"}),
+    dict(id="E44", name="DB failover completed automatically", category="recovered",
+         severity="high", escalate=False, context_needed=False,
+         rationale="Writes failed for 47s (high: data-path outage) but the managed failover finished and error "
+         "rates are back to baseline; review in the morning.",
+         title="DB primary failed over to replica db-2; writes failed for 47s; replication healthy, error rate back to baseline",
+         message="DB primary failed over to replica db-2; writes failed for 47s; replication healthy, error rate back to baseline",
+         frames=[frame("app/jobs/health_checks.py", "check_db_failover", "if status.failover_completed:")],
+         level="warning", env="production", req=None, datetime="2026-11-26T04:05:00Z"),
+    dict(id="E45", name="TLS certificate expires in 2 days, renewal failed", category="certificate",
+         severity="medium", escalate=True, context_needed=False,
+         rationale="No impact yet, but auto-renewal failed and it is Friday night: if nobody renews by hand the "
+         "whole site goes down on Sunday, before the next business day.",
+         title="TLS certificate for shop.acme.example expires in 2 days (2026-11-29T22:10:00Z); auto-renewal failed: DNS-01 challenge timed out",
+         message="TLS certificate for shop.acme.example expires in 2 days (2026-11-29T22:10:00Z); auto-renewal failed: DNS-01 challenge timed out",
+         frames=[frame("app/jobs/health_checks.py", "check_tls_expiry", "if cert.days_left <= TLS_WARN_DAYS:")],
+         level="warning", env="production", req=None, datetime="2026-11-27T22:10:00Z"),
+    dict(id="E46", name="Staff login from new country after password reset", category="security",
+         severity="medium", escalate=True, context_needed=False,
+         rationale="Nothing is broken, but this pattern looks like takeover of an account that can issue "
+         "refunds; it needs a human to check now.",
+         title="Staff login for ops-lead from new country RO 6 min after password reset (new device d-91f3)",
+         message="Staff login for ops-lead from new country RO 6 min after password reset (new device d-91f3)",
+         frames=[frame("app/security.py", "check_staff_login", "if country not in user.known_countries")],
+         level="warning", env="production", req=("POST", "/login", 200), datetime="2026-11-26T01:47:00Z"),
+    dict(id="E47", name="Checkout error rate climbing steadily", category="trend",
+         severity="medium", escalate=True, context_needed=False,
+         rationale="6% of checkouts failing now (medium), but rising 5 points/hour: it will be a major outage "
+         "within hours if nobody looks.",
+         title="Checkout 5xx rate at 6% and rising 5 points/hour for the last 3 hours",
+         message="Checkout 5xx rate at 6% and rising 5 points/hour for the last 3 hours",
+         frames=[frame("app/jobs/health_checks.py", "check_checkout_error_rate", "elif stats.current_pct >= ERROR_RATE_WARN_PCT:")],
+         level="warning", env="production", req=None, datetime="2026-11-26T00:30:00Z"),
+    dict(id="E48", name="Distributed credential stuffing", category="security",
+         severity="medium", escalate=True, context_needed=True,
+         rationale="An active attack across many IPs that per-IP rate limiting does not stop, with some "
+         "successful logins; needs blocking and forced resets now.",
+         title="48210 failed logins in the last hour from 1312 IPs (37 successful logins to accounts with a failed attempt)",
+         message="48210 failed logins in the last hour from 1312 IPs (37 successful logins to accounts with a failed attempt)",
+         frames=[frame("app/security.py", "check_failed_login_volume", "if stats.failed_last_hour >= FAILED_LOGIN_ALERT_PER_HOUR:")],
+         level="warning", env="production", req=None, datetime="2026-11-26T03:05:00Z"),
 ]
 
 
@@ -368,6 +438,11 @@ def sentry_payload(case: dict, issue_number: int) -> dict:
         "web_url": f"https://acme.sentry.io/issues/{7_100_000 + issue_number}/",
         "extra": dict(case.get("extra", {})),
     }
+
+    if case.get("datetime"):
+        event["datetime"] = case["datetime"]
+    if case.get("tags"):
+        event["tags"] = [[key, value] for key, value in case["tags"].items()]
 
     if "exc" in case:
         exc_type, exc_value = case["exc"]
@@ -399,11 +474,12 @@ def main() -> None:
             "label": {"severity": case["severity"], "escalate": case["escalate"]},
             "rationale": case["rationale"],
             "context_needed": case["context_needed"],
+            "recent_incidents": case.get("recent_incidents", []),
             "sentry_webhook": sentry_payload(case, number),
         })
 
     ids = [c["id"] for c in out]
-    assert len(ids) == len(set(ids)) == 40, ids
+    assert len(ids) == len(set(ids)) == 48, ids
     doc = {
         "description": "UpTime.ai severity/escalation eval set. Labels were written before any assessor ran.",
         "fixture_repo": "eval/fixture_repo (stack-frame paths are relative to it)",
@@ -416,6 +492,8 @@ def main() -> None:
     print("severity:", dict(Counter(c["label"]["severity"] for c in out)))
     print("escalate:", dict(Counter(c["label"]["escalate"] for c in out)))
     print("context_needed:", sum(c["context_needed"] for c in out))
+    print("severity/escalation disagree:", sum(
+        (c["label"]["severity"] == "high") != c["label"]["escalate"] for c in out))
 
 
 if __name__ == "__main__":

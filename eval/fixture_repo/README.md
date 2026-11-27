@@ -24,7 +24,9 @@ checkout, and customer accounts, plus internal admin tools and background jobs.
 | `app/notifications/email.py` | Order confirmation emails (sent from the worker queue) |
 | `app/admin/reports.py` | Internal sales reports for the ops team |
 | `app/jobs/nightly_export.py` | Nightly export of orders to the data warehouse |
-| `app/jobs/health_checks.py` | Periodic infrastructure checks |
+| `app/jobs/health_checks.py` | Periodic checks: DB disk, checkout error rate, DB failover, TLS expiry |
+| `app/security.py` | Login anomaly detection |
+| `app/maintenance.py` | Tags Sentry events during planned maintenance windows |
 | `app/legacy/v1_coupons.py` | Old coupon format, only used by `scripts/backfill_coupons.py` |
 | `app/db.py` | SQLAlchemy engine and sessions |
 | `app/logging_utils.py` | Structured order-event logging |

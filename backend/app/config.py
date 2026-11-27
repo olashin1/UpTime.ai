@@ -11,27 +11,31 @@ load_dotenv(dotenv_path=ENV_PATH)
 
 
 class Settings(BaseSettings):
+    # SQLite only: database.py runs SQLite PRAGMA statements for its lightweight migration.
     database_url: str = "sqlite:///./app.db"
-    redis_url: str = "redis://localhost:6379"
 
-    fetch_ai_agent_url: str = "http://localhost:8001"
-
-    sentry_auth_token: str | None = None
-    sentry_org_slug: str | None = None
-    sentry_project_slug: str | None = None
+    # Sentry: DSN reports this backend's own errors; the secret verifies incoming webhooks.
     sentry_dsn: str | None = None
     sentry_webhook_secret: str | None = None
 
+    # Defaults to the address derived from the investigation agent's seed (see addresses.py).
     investigation_agent_address: str | None = None
-    
+
     default_repo_full_name: str | None = None
     default_branch: str = "main"
+    # Directory inside the repo that stack-trace paths are relative to ("" = repo root).
+    repo_source_root: str = ""
 
     github_token: str | None = None
 
     asi_one_api_key: str | None = None
     asi_one_base_url: str = "https://api.asi1.ai/v1"
     asi_one_model: str = "asi1"
+
+    # Severity + escalation assessor: rules | llm | llm_repo (see severity_service.py).
+    severity_assessor: str = "llm_repo"
+    gemini_api_key: str | None = None
+    gemini_model: str = "gemini-3.5-flash-lite"
 
     model_config = SettingsConfigDict(
         env_file=str(ENV_PATH),

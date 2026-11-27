@@ -1,0 +1,33 @@
+{
+  "mode": "e2e_llm_repo",
+  "ref": "43b0a2d776307775ed5dce20cbb410bb22b2c0b4",
+  "repo": "olashin1/UpTime.ai",
+  "source_root": "eval/fixture_repo",
+  "sample": [
+    "E01"
+  ],
+  "gemini_calls": 1,
+  "fallbacks": 0,
+  "rows": [
+    {
+      "id": "E01",
+      "incident_id": 1,
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "llm_repo",
+      "reason": "The core checkout flow is failing with a 500 error for users because cart.load_cart is returning None when attempting to load the cart.",
+      "dashboard_latency_ms": 3921,
+      "arrival_offset_ms": 147,
+      "server_latency_ms": 1936,
+      "assessor_ms": 1514
+    }
+  ]
+}

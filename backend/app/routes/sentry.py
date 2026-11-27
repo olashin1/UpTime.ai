@@ -11,7 +11,7 @@ from app.config import settings
 from app.database import get_session
 from app.models.incident import Incident
 from app.agents.models import IncidentMessage, RecentIncident
-from app.agents.addresses import LOCAL_AGENT_RESOLVER
+from app.agents.addresses import INVESTIGATION_AGENT_ADDRESS, LOCAL_AGENT_RESOLVER
 from app.agents.workflow_trace import trace_step
 
 router = APIRouter(prefix="/api/sentry", tags=["sentry"])
@@ -73,6 +73,9 @@ async def sentry_webhook(
     environment = event.get("environment")
     context = _request_context_from_event(event)
     full_error = _full_error_from_event(event)
+    stack_frames, stack_files = _stack_from_event(event)
+    tags = _tags_from_event(event)
+    event_time = event.get("datetime") or event.get("timestamp")
 
     trace_step(
         "webhook",
@@ -129,11 +132,7 @@ async def sentry_webhook(
             detail="Missing repo_full_name. Set DEFAULT_REPO_FULL_NAME in .env",
         )
 
-    if not settings.investigation_agent_address:
-        raise HTTPException(
-            status_code=500,
-            detail="Missing INVESTIGATION_AGENT_ADDRESS in .env",
-        )
+    investigation_address = settings.investigation_agent_address or INVESTIGATION_AGENT_ADDRESS
 
     msg = IncidentMessage(
         incident_id=incident.id,
@@ -150,6 +149,10 @@ async def sentry_webhook(
         route=context["route"],
         status_code=context["status_code"],
         event_type=context["event_type"],
+        stack_frames=stack_frames,
+        stack_files=stack_files,
+        tags=tags,
+        event_time=str(event_time) if event_time is not None else None,
         recent_incidents=recent_incidents,
     )
 
@@ -163,10 +166,10 @@ async def sentry_webhook(
             incident.id,
             "forwarding incident to Investigation Agent",
             recent_incidents=len(recent_incidents),
-            destination=settings.investigation_agent_address,
+            destination=investigation_address,
         )
         delivery = await send_message(
-            destination=settings.investigation_agent_address,
+            destination=investigation_address,
             message=msg,
             resolver=LOCAL_AGENT_RESOLVER,
             timeout=30,
@@ -275,6 +278,44 @@ def _full_error_from_event(event: dict) -> str | None:
     return "\n".join(unique_details) if unique_details else None
 
 
+IGNORED_TAGS = {"level", "environment", "url", "transaction", "server_name", "runtime", "release"}
+
+
+def _tags_from_event(event: dict) -> dict[str, str]:
+    """Sentry sends tags as [[key, value], ...] (or occasionally as a dict)."""
+    raw = event.get("tags") or []
+    pairs = raw.items() if isinstance(raw, dict) else (
+        (item[0], item[1]) for item in raw if isinstance(item, (list, tuple)) and len(item) == 2
+    )
+    return {str(key): str(value) for key, value in pairs if key not in IGNORED_TAGS}
+
+
+def _stack_from_event(event: dict, max_frames: int = 12) -> tuple[list[str], list[str]]:
+    """In-app stack frames ("path:function:line", oldest first) and their unique files.
+
+    Sentry lists frames oldest call first, so the last frame is where the error was raised.
+    """
+    frames: list[str] = []
+    files: list[str] = []
+    values = (event.get("exception") or {}).get("values") or []
+
+    for value in values:
+        for frame in (value.get("stacktrace") or {}).get("frames") or []:
+            if frame.get("in_app") is False:
+                continue
+
+            path = frame.get("filename") or frame.get("abs_path")
+            if not path:
+                continue
+
+            frames.append(f"{path}:{frame.get('function') or '?'}:{frame.get('lineno') or '?'}")
+            if path not in files:
+                files.append(path)
+
+    # Prefer the files nearest the raise site when trimming.
+    return frames[-max_frames:], list(reversed(files))[:4]
+
+
 def _request_context_from_event(event: dict) -> dict:
     request = event.get("request") or {}
     extra = event.get("extra") or {}
@@ -312,7 +353,7 @@ def _recent_incidents(
             sentry_issue_id=incident.sentry_issue_id,
             title=incident.title,
             status=incident.status,
-            severity=incident.severity,
+            severity=incident.agent_severity or incident.severity,
             issue_url=incident.issue_url,
             recommendation=incident.recommendation,
         )

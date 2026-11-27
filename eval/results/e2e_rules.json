@@ -1,0 +1,432 @@
+{
+  "mode": "e2e_rules",
+  "ref": "oncall-improvements",
+  "repo": "olashin1/UpTime.ai",
+  "source_root": "eval/fixture_repo",
+  "sample": [
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05",
+    "E13",
+    "E14",
+    "E15",
+    "E16",
+    "E17",
+    "E25",
+    "E26",
+    "E27",
+    "E28",
+    "E29",
+    "E37",
+    "E38",
+    "E39",
+    "E40",
+    "E41"
+  ],
+  "gemini_calls": 0,
+  "fallbacks": 0,
+  "rows": [
+    {
+      "id": "E01",
+      "incident_id": 1,
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "dashboard_latency_ms": 3919,
+      "arrival_offset_ms": 147,
+      "server_latency_ms": 35,
+      "assessor_ms": null
+    },
+    {
+      "id": "E02",
+      "incident_id": 1,
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "dashboard_latency_ms": 3385,
+      "arrival_offset_ms": 1046,
+      "server_latency_ms": 33,
+      "assessor_ms": null
+    },
+    {
+      "id": "E03",
+      "incident_id": 1,
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "dashboard_latency_ms": 2887,
+      "arrival_offset_ms": 1209,
+      "server_latency_ms": 37,
+      "assessor_ms": null
+    },
+    {
+      "id": "E04",
+      "incident_id": 1,
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "dashboard_latency_ms": 851,
+      "arrival_offset_ms": 3351,
+      "server_latency_ms": 30,
+      "assessor_ms": null
+    },
+    {
+      "id": "E05",
+      "incident_id": 1,
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "dashboard_latency_ms": 3394,
+      "arrival_offset_ms": 667,
+      "server_latency_ms": 36,
+      "assessor_ms": null
+    },
+    {
+      "id": "E13",
+      "incident_id": 1,
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=warning, status_code=None.",
+      "dashboard_latency_ms": 2889,
+      "arrival_offset_ms": 1574,
+      "server_latency_ms": 40,
+      "assessor_ms": null
+    },
+    {
+      "id": "E14",
+      "incident_id": 1,
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=error, status_code=500.",
+      "dashboard_latency_ms": 234,
+      "arrival_offset_ms": 3810,
+      "server_latency_ms": 43,
+      "assessor_ms": null
+    },
+    {
+      "id": "E15",
+      "incident_id": 1,
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=error, status_code=200.",
+      "dashboard_latency_ms": 3381,
+      "arrival_offset_ms": 1072,
+      "server_latency_ms": 30,
+      "assessor_ms": null
+    },
+    {
+      "id": "E16",
+      "incident_id": 1,
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=error, status_code=200.",
+      "dashboard_latency_ms": 3909,
+      "arrival_offset_ms": 346,
+      "server_latency_ms": 38,
+      "assessor_ms": null
+    },
+    {
+      "id": "E17",
+      "incident_id": 1,
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=error, status_code=None.",
+      "dashboard_latency_ms": 3390,
+      "arrival_offset_ms": 646,
+      "server_latency_ms": 30,
+      "assessor_ms": null
+    },
+    {
+      "id": "E25",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=error, status_code=200.",
+      "dashboard_latency_ms": 3915,
+      "arrival_offset_ms": 136,
+      "server_latency_ms": 39,
+      "assessor_ms": null
+    },
+    {
+      "id": "E26",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=error, status_code=None.",
+      "dashboard_latency_ms": 338,
+      "arrival_offset_ms": 3669,
+      "server_latency_ms": 39,
+      "assessor_ms": null
+    },
+    {
+      "id": "E27",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=error, status_code=200.",
+      "dashboard_latency_ms": 1348,
+      "arrival_offset_ms": 2981,
+      "server_latency_ms": 28,
+      "assessor_ms": null
+    },
+    {
+      "id": "E28",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=warning, status_code=401.",
+      "dashboard_latency_ms": 3910,
+      "arrival_offset_ms": 163,
+      "server_latency_ms": 33,
+      "assessor_ms": null
+    },
+    {
+      "id": "E29",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=warning, status_code=429.",
+      "dashboard_latency_ms": 4399,
+      "arrival_offset_ms": 3975,
+      "server_latency_ms": 21,
+      "assessor_ms": null
+    },
+    {
+      "id": "E37",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=warning, status_code=None.",
+      "dashboard_latency_ms": 1854,
+      "arrival_offset_ms": 2597,
+      "server_latency_ms": 29,
+      "assessor_ms": null
+    },
+    {
+      "id": "E38",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=warning, status_code=400.",
+      "dashboard_latency_ms": 3899,
+      "arrival_offset_ms": 602,
+      "server_latency_ms": 25,
+      "assessor_ms": null
+    },
+    {
+      "id": "E39",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=error, status_code=200.",
+      "dashboard_latency_ms": 1369,
+      "arrival_offset_ms": 2854,
+      "server_latency_ms": 30,
+      "assessor_ms": null
+    },
+    {
+      "id": "E40",
+      "incident_id": 1,
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=error, status_code=None.",
+      "dashboard_latency_ms": 857,
+      "arrival_offset_ms": 3392,
+      "server_latency_ms": 29,
+      "assessor_ms": null
+    },
+    {
+      "id": "E41",
+      "incident_id": 1,
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "assessor": "rules",
+      "reason": "Keyword rule: level=warning, status_code=None.",
+      "dashboard_latency_ms": 3904,
+      "arrival_offset_ms": 218,
+      "server_latency_ms": 38,
+      "assessor_ms": null
+    }
+  ]
+}

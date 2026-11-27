@@ -1,0 +1,1029 @@
+{
+  "mode": "llm_repo",
+  "ref": "43b0a2d776307775ed5dce20cbb410bb22b2c0b4",
+  "repo": "olashin1/UpTime.ai",
+  "source_root": "eval/fixture_repo",
+  "model": "gemini-3.5-flash-lite",
+  "gemini_calls": 48,
+  "fallbacks": 0,
+  "rows": [
+    {
+      "id": "E01",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The checkout and payment core user flow is currently failing with a 500 error when loading the cart.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/checkout.py",
+        "README.md"
+      ],
+      "wall_ms": 2550
+    },
+    {
+      "id": "E02",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The checkout flow is failing because the payment provider is unavailable after all retries, preventing users from completing purchases.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/payments.py",
+        "app/checkout.py",
+        "README.md"
+      ],
+      "wall_ms": 1588
+    },
+    {
+      "id": "E03",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The checkout flow is failing due to database statement timeouts during stock reservation, directly impacting user purchases and revenue.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/inventory.py",
+        "app/checkout.py",
+        "README.md"
+      ],
+      "wall_ms": 1559
+    },
+    {
+      "id": "E04",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Token verification is failing with signature errors on core user flows like the cart, indicating potential widespread auth failure or key misalignment.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/auth.py",
+        "README.md"
+      ],
+      "wall_ms": 1582
+    },
+    {
+      "id": "E05",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Signature verification failures on payment webhooks are standard client/provider authentication errors, and the provider automatically retries for up to 72 hours.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/webhooks/payment_provider.py",
+        "README.md"
+      ],
+      "wall_ms": 1715
+    },
+    {
+      "id": "E06",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Inventory is going negative due to race conditions in the checkout flow during concurrent purchases, which risks data corruption and overselling core user products.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/inventory.py",
+        "app/checkout.py",
+        "README.md"
+      ],
+      "wall_ms": 1530
+    },
+    {
+      "id": "E07",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The checkout route is failing with a KeyError when applying promo codes, blocking users from placing orders.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/checkout.py",
+        "README.md"
+      ],
+      "wall_ms": 1599
+    },
+    {
+      "id": "E08",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The login route is failing for users due to database connection exhaustion (too many clients already), preventing user authentication.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/auth.py",
+        "README.md"
+      ],
+      "wall_ms": 2105
+    },
+    {
+      "id": "E09",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Database connection pool exhaustion is causing 500 errors on core user authentication and order history routes.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/auth.py",
+        "README.md"
+      ],
+      "wall_ms": 1541
+    },
+    {
+      "id": "E10",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The checkout core user flow is completely blocked due to timeouts connecting to the internal tax service.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/tax.py",
+        "app/checkout.py",
+        "README.md"
+      ],
+      "wall_ms": 1669
+    },
+    {
+      "id": "E11",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "The payment function automatically retries transient server errors on the payment provider and captures exceptions on each attempt for visibility, so this is expected retry behavior rather than an unhandled failure.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/payments.py",
+        "app/checkout.py",
+        "README.md"
+      ],
+      "wall_ms": 1528
+    },
+    {
+      "id": "E12",
+      "label": {
+        "severity": "high",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The checkout flow is completely failing for users due to payment provider rate limits/downtime.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/payments.py",
+        "app/checkout.py",
+        "README.md"
+      ],
+      "wall_ms": 1498
+    },
+    {
+      "id": "E13",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "The database primary disk usage is at 92% and growing by 2% per hour, risking total database failure and data corruption within a few hours.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/jobs/health_checks.py",
+        "README.md"
+      ],
+      "wall_ms": 1637
+    },
+    {
+      "id": "E14",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "An internal ops sales report query timed out, which affects only an internal reporting feature for staff without impacting core user flows.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/admin/reports.py",
+        "README.md"
+      ],
+      "wall_ms": 1734
+    },
+    {
+      "id": "E15",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "Redis connection failure is caught and handled with a working fallback to Postgres, resulting in a successful HTTP 200 response.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/cart.py",
+        "README.md"
+      ],
+      "wall_ms": 2402
+    },
+    {
+      "id": "E16",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The internal search service connection failed, but the code gracefully catches the exception and falls back to a database search.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/search.py",
+        "README.md"
+      ],
+      "wall_ms": 1672
+    },
+    {
+      "id": "E17",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The email sending function has built-in retries up to 8 attempts, so this transient SMTP disconnection does not require immediate paging.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/notifications/email.py",
+        "README.md"
+      ],
+      "wall_ms": 1630
+    },
+    {
+      "id": "E18",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The nightly export job failed due to an S3 AccessDenied error, but it is a background job that can wait for normal business hours since it does not directly block core user flows.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/jobs/nightly_export.py",
+        "README.md"
+      ],
+      "wall_ms": 1594
+    },
+    {
+      "id": "E19",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "This is a user-caused input validation error when uploading an invalid image file to their account profile, which does not affect core flows or warrant paging.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/accounts.py",
+        "README.md"
+      ],
+      "wall_ms": 1823
+    },
+    {
+      "id": "E20",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Account deletion is failing with a database integrity error because foreign key constraints on the orders table are violated when users attempt to delete their accounts.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/accounts.py",
+        "README.md"
+      ],
+      "wall_ms": 1431
+    },
+    {
+      "id": "E21",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The MemoryError occurred in a background nightly export job which documentation notes will be re-exported by the next run, causing no immediate user-facing harm.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/jobs/nightly_export.py",
+        "README.md"
+      ],
+      "wall_ms": 1589
+    },
+    {
+      "id": "E22",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "The shipping rate lookup successfully falls back to a flat rate and completes the checkout flow without harming users.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/shipping.py",
+        "app/checkout.py",
+        "README.md"
+      ],
+      "wall_ms": 1744
+    },
+    {
+      "id": "E23",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Users are unable to view their order history because accessing the orders page results in a 500 server error due to an unhandled IndexError when a user has no orders.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/orders.py",
+        "README.md"
+      ],
+      "wall_ms": 3268
+    },
+    {
+      "id": "E24",
+      "label": {
+        "severity": "medium",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": false,
+      "reason": "Refunds are failing due to a 401 Unauthorized API key error, preventing support staff from issuing refunds for customers.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/payments.py",
+        "app/admin/refunds.py",
+        "README.md"
+      ],
+      "wall_ms": 1681
+    },
+    {
+      "id": "E25",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "This is an expected retry attempt for an intermittent payment provider timeout that successfully recovers in the retry loop.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/payments.py",
+        "app/checkout.py",
+        "README.md"
+      ],
+      "wall_ms": 1488
+    },
+    {
+      "id": "E26",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The log message indicates a successful order confirmation email was incorrectly logged at error level instead of info.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/notifications/email.py",
+        "README.md"
+      ],
+      "wall_ms": 1430
+    },
+    {
+      "id": "E27",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The exception in logging is safely caught and ignored so it does not affect the successful checkout flow.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/logging_utils.py",
+        "app/checkout.py",
+        "README.md"
+      ],
+      "wall_ms": 1578
+    },
+    {
+      "id": "E28",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "This is an expected 401 Unauthorized response for invalid login credentials, representing normal user or bot activity rather than a system error.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/auth.py",
+        "README.md"
+      ],
+      "wall_ms": 1434
+    },
+    {
+      "id": "E29",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "This is an expected client rate-limiting response (HTTP 429) on the login route, representing standard security behavior rather than a service failure.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "README.md"
+      ],
+      "wall_ms": 1272
+    },
+    {
+      "id": "E30",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "This is standard bot scanner traffic looking for WordPress admin pages on a FastAPI application.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "README.md"
+      ],
+      "wall_ms": 1473
+    },
+    {
+      "id": "E31",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The error occurs inside a try/except block in a non-core recommendation widget that safely catches the exception and returns an empty list without breaking the product page.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/recommendations.py",
+        "README.md"
+      ],
+      "wall_ms": 1885
+    },
+    {
+      "id": "E32",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The error occurred in a manual staff script using legacy code rather than a core user-facing flow.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/legacy/v1_coupons.py",
+        "scripts/backfill_coupons.py",
+        "README.md"
+      ],
+      "wall_ms": 1753
+    },
+    {
+      "id": "E33",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "This is an expected duplicate webhook caught by the database uniqueness constraint and handled gracefully with a 200 OK response.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/webhooks/payment_provider.py",
+        "README.md"
+      ],
+      "wall_ms": 1504
+    },
+    {
+      "id": "E34",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "The checkout endpoint failed due to a database statement timeout, but the alert is in the staging environment so it does not require an immediate page.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/inventory.py",
+        "app/checkout.py",
+        "README.md"
+      ],
+      "wall_ms": 1531
+    },
+    {
+      "id": "E35",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "The alert occurred in the development environment and does not impact production users.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/checkout.py",
+        "README.md"
+      ],
+      "wall_ms": 1596
+    },
+    {
+      "id": "E36",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "This is a 422 Unprocessable Entity error indicating client-side validation failure due to a missing quantity field in a cart request, which represents normal client input validation error rather than a server fault.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "README.md"
+      ],
+      "wall_ms": 1566
+    },
+    {
+      "id": "E37",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "This is a standard python deprecation warning for a future version and causes no immediate impact to users or system functionality.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "README.md"
+      ],
+      "wall_ms": 1375
+    },
+    {
+      "id": "E38",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "This is an expected client-side 400 error caused by a SQL injection scanner probe hitting the search endpoint.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/search.py",
+        "README.md"
+      ],
+      "wall_ms": 4219
+    },
+    {
+      "id": "E39",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "Analytics event tracking timed out to an external collector, but the error is caught, reported to Sentry, and the main request successfully returns an ok response.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/analytics.py",
+        "README.md"
+      ],
+      "wall_ms": 1586
+    },
+    {
+      "id": "E40",
+      "label": {
+        "severity": "low",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "This is an expected websocket connection closure when a customer closes their browser tab.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/live_tracking.py",
+        "README.md"
+      ],
+      "wall_ms": 1502
+    },
+    {
+      "id": "E41",
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "The alert indicates a checkout error rate spike that has already fully recovered twenty minutes prior to the notification.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/jobs/health_checks.py",
+        "README.md"
+      ],
+      "wall_ms": 1591
+    },
+    {
+      "id": "E42",
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": false
+      },
+      "severity_correct": true,
+      "escalate_correct": true,
+      "reason": "A high severity checkout failure occurred due to payment provider downtime, but an active incident is already acknowledged and being investigated by the on-call team.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/payments.py",
+        "app/checkout.py",
+        "README.md"
+      ],
+      "wall_ms": 1503
+    },
+    {
+      "id": "E43",
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "The database termination error occurred during a scheduled maintenance window for the PostgreSQL upgrade and is expected behavior.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/inventory.py",
+        "app/checkout.py",
+        "README.md"
+      ],
+      "wall_ms": 1493
+    },
+    {
+      "id": "E44",
+      "label": {
+        "severity": "high",
+        "escalate": false
+      },
+      "predicted": {
+        "severity": "low",
+        "escalate": false
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "The database failover already completed successfully and the error rate is back to baseline, meaning no active incident requires immediate paging.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/jobs/health_checks.py",
+        "README.md"
+      ],
+      "wall_ms": 1461
+    },
+    {
+      "id": "E45",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "The TLS certificate for the main shop domain expires in 2 days and automatic renewal has failed, which will cause complete service outage for all users soon.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/jobs/health_checks.py",
+        "README.md"
+      ],
+      "wall_ms": 1444
+    },
+    {
+      "id": "E46",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "An internal staff account logged in from a new country shortly after a password reset on a new device, indicating a potential security exposure.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/security.py",
+        "README.md"
+      ],
+      "wall_ms": 1948
+    },
+    {
+      "id": "E47",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "Checkout is a core user flow and its error rate is currently at 6% and rising, which will cause ongoing revenue loss and user failures.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/jobs/health_checks.py",
+        "README.md"
+      ],
+      "wall_ms": 1399
+    },
+    {
+      "id": "E48",
+      "label": {
+        "severity": "medium",
+        "escalate": true
+      },
+      "predicted": {
+        "severity": "high",
+        "escalate": true
+      },
+      "severity_correct": false,
+      "escalate_correct": true,
+      "reason": "High volume of failed logins from over a thousand IPs indicates a credential stuffing or brute force attack actively compromising user accounts.",
+      "assessor": "llm_repo",
+      "model": "gemini-3.5-flash-lite",
+      "context_files": [
+        "app/security.py",
+        "README.md"
+      ],
+      "wall_ms": 1379
+    }
+  ]
+}

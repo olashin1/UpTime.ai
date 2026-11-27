@@ -1,43 +1,12 @@
 fastapi
 uvicorn[standard]
-
-# Database
 sqlmodel
-psycopg2-binary
-alembic
-
-# Settings
-pydantic-settings
-
-# Auth & Security
-python-jose[cryptography]
-passlib[bcrypt]
-
-# Background Jobs
-redis
-rq
-
-# HTTP / GitHub
-httpx
-
-# Scanning
-semgrep
-
-# Monitoring
-sentry-sdk
-
-# Fetch.ai Agents
-uagents
-
-# Logging
-structlog
-
-# env
-python-dotenv
-
 pydantic
-
+pydantic-settings
+python-dotenv
+httpx
+sentry-sdk
+uagents
 openai
-
 PyGithub
-
+google-genai

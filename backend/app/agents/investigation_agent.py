@@ -1,3 +1,7 @@
+import asyncio
+from datetime import datetime, timezone
+
+from sqlmodel import Session
 from uagents import Agent, Context
 
 from app.agents.models import IncidentMessage, InvestigationResult
@@ -8,6 +12,9 @@ from app.agents.addresses import (
     LOCAL_AGENT_RESOLVER,
 )
 from app.agents.workflow_trace import trace_step
+from app.database import engine, init_db
+from app.models.incident import Incident
+from app.services.severity_service import Assessment, assess, incident_text
 
 investigation_agent = Agent(
     name="investigation_agent",
@@ -53,9 +60,23 @@ async def investigate(ctx: Context, sender: str, msg: IncidentMessage):
             "no recent incident history available",
         )
 
+    assessment = await asyncio.to_thread(assess, msg)
+    severity = assessment.severity
+    _store_assessment(msg.incident_id, assessment)
+    trace_step(
+        "investigation",
+        msg.incident_id,
+        "severity + escalation assessed",
+        assessor=assessment.assessor,
+        severity=assessment.severity,
+        escalate=assessment.escalate,
+        reason=assessment.reason,
+        context_files=assessment.context_files,
+        duration_ms=assessment.duration_ms,
+    )
+
     actionable, reason = _is_actionable(msg)
-    severity = _severity_for(msg)
-    files_to_inspect = _guess_files(msg)
+    files_to_inspect = list(dict.fromkeys([*msg.stack_files, *_guess_files(msg)]))[:5]
 
     result = InvestigationResult(
         incident_id=msg.incident_id,
@@ -134,7 +155,7 @@ async def investigate(ctx: Context, sender: str, msg: IncidentMessage):
 
 
 def _is_actionable(msg: IncidentMessage) -> tuple[bool, str]:
-    text = _incident_text(msg)
+    text = incident_text(msg)
     recent_same_title = sum(
         1 for incident in msg.recent_incidents if incident.title.lower() == msg.title.lower()
     )
@@ -157,24 +178,26 @@ def _is_actionable(msg: IncidentMessage) -> tuple[bool, str]:
     return True, "Defaulting to actionable because the alert rule fired."
 
 
-def _severity_for(msg: IncidentMessage) -> str:
-    text = _incident_text(msg)
+def _store_assessment(incident_id: int, assessment: Assessment) -> None:
+    init_db()
 
-    if (
-        msg.level == "fatal"
-        or (msg.status_code is not None and msg.status_code >= 500)
-        or "critical" in text
-    ):
-        return "high"
+    with Session(engine) as session:
+        incident = session.get(Incident, incident_id)
 
-    if msg.level == "error" or "exception" in text:
-        return "medium"
+        if incident is None:
+            return
 
-    return "low"
+        incident.agent_severity = assessment.severity
+        incident.escalate = assessment.escalate
+        incident.escalation_reason = assessment.reason
+        incident.assessor = assessment.assessor
+        incident.assessed_at = datetime.now(timezone.utc)
+        session.add(incident)
+        session.commit()
 
 
 def _guess_files(msg: IncidentMessage) -> list[str]:
-    text = _incident_text(msg)
+    text = incident_text(msg)
     files: list[str] = []
 
     if (
@@ -203,21 +226,6 @@ def _guess_files(msg: IncidentMessage) -> list[str]:
     return files[:5]
 
 
-def _incident_text(msg: IncidentMessage) -> str:
-    return " ".join(
-        str(part)
-        for part in [
-            msg.title,
-            msg.full_error,
-            msg.http_method,
-            msg.route,
-            msg.status_code,
-            msg.event_type,
-        ]
-        if part is not None
-    ).lower()
-
-
 def _is_expected_client_noise(msg: IncidentMessage, text: str) -> bool:
     if msg.event_type == "bogus_backend_request":
         return True
@@ -239,7 +247,7 @@ def _is_expected_client_noise(msg: IncidentMessage, text: str) -> bool:
 
 
 def _root_cause_for(msg: IncidentMessage) -> str:
-    text = _incident_text(msg)
+    text = incident_text(msg)
 
     if "indexerror" in text or "string index out of range" in text:
         return (
@@ -264,7 +272,7 @@ def _root_cause_for(msg: IncidentMessage) -> str:
 
 def _recommendation_for(msg: IncidentMessage, files_to_inspect: list[str]) -> str:
     file_hint = ", ".join(files_to_inspect) if files_to_inspect else "the failing route"
-    text = _incident_text(msg)
+    text = incident_text(msg)
 
     if "indexerror" in text or "string index out of range" in text:
         return (
